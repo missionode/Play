@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNMASKED • The Social Experiment Game</title>
+  <meta name="description" content="A psychological social experiment game that unmasks your true character by analyzing the gap between your ideal values and your decisions under pressure.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="glow-bg">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-logo" id="header-logo">
+      <span class="logo-text">UNMASKED</span>
+      <span class="logo-tagline">the social experiment</span>
+    </div>
+    
+    <!-- Game progress stepper (visible during phases) -->
+    <div class="progress-container hidden" id="game-progress">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <span class="progress-label" id="progress-text">Phase 1: 0%</span>
+    </div>
+
+    <!-- Host dashboard shortcut icon -->
+    <button class="host-btn" id="host-trigger" title="Host Dashboard" aria-label="Open Host Dashboard">
+      <i class="fa-solid fa-user-shield"></i>
+    </button>
+  </header>
+
+  <main class="app-main" id="main-content">
+    
+    <!-- ================= SCREEN 1: WELCOME SCREEN ================= -->
+    <section class="screen active" id="screen-welcome">
+      <div class="glass-card welcome-card animate-fade-in">
+        <div class="icon-header">
+          <div class="mask-icon-container">
+            <i class="fa-solid fa-mask mask-icon"></i>
+          </div>
+        </div>
+        <h1>Reveal Your Real Face</h1>
+        <p class="subtitle">We all wear masks. We tell ourselves we value one thing, but under pressure, our choices tell a different story. This short game analyzes your ideal values against practical dilemmas to uncover your true behavioral profile.</p>
+        
+        <form class="welcome-form" id="register-form" onsubmit="event.preventDefault();">
+          <div class="input-group">
+            <label for="player-name">ENTER THE PLAYER'S NAME</label>
+            <input type="text" id="player-name" placeholder="e.g. David Miller" autocomplete="off" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn-start-game">
+            <span>Begin Experiment</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 2: PHASE 1 INTRO ================= -->
+    <section class="screen hidden" id="screen-phase1-intro">
+      <div class="glass-card text-center max-w-md animate-fade-in">
+        <div class="phase-badge">Phase 01</div>
+        <h2>The Ideal Self</h2>
+        <p class="mb-6">First, let's explore your aspirations. You will be presented with a series of bracket matchups pitting core human values against each other. Choose the value that you believe is **most important**.</p>
+        <div class="info-alert">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Select the value you honestly feel represents your ideal self. There are no wrong answers.</span>
+        </div>
+        <button class="btn btn-primary mt-6" id="btn-start-phase1">
+          <span>Start Bracket Sorter</span>
+          <i class="fa-solid fa-play"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 3: PHASE 1 GAME (BRACKET) ================= -->
+    <section class="screen hidden" id="screen-phase1-game">
+      <div class="game-layout">
+        <!-- Match title/round indicator -->
+        <div class="match-meta text-center mb-4">
+          <div class="round-indicator" id="p1-round-title">Round 1 • Match 1</div>
+          <p class="meta-tagline text-muted">Which value defines your ideal self?</p>
+        </div>
+
+        <!-- Pairwise choices container -->
+        <div class="choice-container" id="p1-choices-grid">
+          <!-- Choice Card A -->
+          <div class="choice-card glass-card" id="choice-a" tabindex="0">
+            <div class="card-glow"></div>
+            <div class="choice-icon"><i class="fa-solid fa-heart"></i></div>
+            <h3 class="choice-title" id="choice-a-title">Value A</h3>
+            <p class="choice-desc" id="choice-a-desc">Description of Value A</p>
+            <div class="choice-select-indicator">Select Value</div>
+          </div>
+          
+          <div class="versus-divider">
+            <span>VS</span>
+          </div>
+
+          <!-- Choice Card B -->
+          <div class="choice-card glass-card" id="choice-b" tabindex="0">
+            <div class="card-glow"></div>
+            <div class="choice-icon"><i class="fa-solid fa-trophy"></i></div>
+            <h3 class="choice-title" id="choice-b-title">Value B</h3>
+            <p class="choice-desc" id="choice-b-desc">Description of Value B</p>
+            <div class="choice-select-indicator">Select Value</div>
+          </div>
+        </div>
+
+        <!-- Bracket visualizer at bottom -->
+        <div class="bracket-visualizer glass-card mt-6">
+          <h4>Tournament Bracket Status</h4>
+          <div class="bracket-nodes-row" id="bracket-nodes">
+            <!-- Dynamically populated nodes representing remaining values -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 4: PHASE 2 INTRO ================= -->
+    <section class="screen hidden" id="screen-phase2-intro">
+      <div class="glass-card text-center max-w-md animate-fade-in">
+        <div class="phase-badge badge-alert">Phase 02</div>
+        <h2>The Crucible</h2>
+        <p class="mb-6">The ideal self has been mapped. Now, let's step into the real world. You will face a series of high-stakes, realistic dilemmas. Each dilemma forces you to make a choice between two actions.</p>
+        <div class="info-alert alert-warning">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>These scenarios represent trade-offs. You must make a hard choice. Decide how you would actually act, not how you think you should.</span>
+        </div>
+        <button class="btn btn-primary mt-6" id="btn-start-phase2">
+          <span>Enter the Crucible</span>
+          <i class="fa-solid fa-fire"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 5: PHASE 2 GAME (DILEMMAS) ================= -->
+    <section class="screen hidden" id="screen-phase2-game">
+      <div class="game-layout">
+        <!-- Scenario Narrative Card -->
+        <div class="glass-card scenario-card animate-slide-up mb-6">
+          <div class="scenario-meta">
+            <span class="dilemma-index" id="p2-dilemma-title">Dilemma 1 of 4</span>
+            <span class="pulse-timer"><i class="fa-regular fa-clock"></i> <span id="dilemma-timer">0.0s</span></span>
+          </div>
+          <h3 class="scenario-headline" id="p2-scenario-title">Scenario Title</h3>
+          <p class="scenario-body" id="p2-scenario-desc">Detailed moral dilemma text goes here, explaining the situation and the core trade-off under pressure...</p>
+        </div>
+
+        <!-- Actions split screen -->
+        <div class="dilemma-choices-container" id="p2-choices-grid">
+          <!-- Action A -->
+          <div class="dilemma-card glass-card" id="dilemma-choice-a" tabindex="0">
+            <div class="card-glow"></div>
+            <div class="dilemma-action-icon"><i class="fa-solid fa-arrow-left"></i></div>
+            <h4 class="dilemma-choice-label">Option A</h4>
+            <p class="dilemma-choice-desc" id="dilemma-choice-a-text">Description of Action A</p>
+            <div class="choice-select-indicator">Choose Option</div>
+          </div>
+          
+          <!-- Action B -->
+          <div class="dilemma-card glass-card" id="dilemma-choice-b" tabindex="0">
+            <div class="card-glow"></div>
+            <div class="dilemma-action-icon"><i class="fa-solid fa-arrow-right"></i></div>
+            <h4 class="dilemma-choice-label">Option B</h4>
+            <p class="dilemma-choice-desc" id="dilemma-choice-b-text">Description of Action B</p>
+            <div class="choice-select-indicator">Choose Option</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 6: PLAYER COMPLETION SCREEN ================= -->
+    <section class="screen hidden" id="screen-complete">
+      <div class="glass-card text-center max-w-md animate-fade-in">
+        <div class="icon-header">
+          <div class="success-icon-container">
+            <i class="fa-solid fa-square-poll-vertical success-icon animate-pulse"></i>
+          </div>
+        </div>
+        <h2>Analysis Complete</h2>
+        <p class="mb-6">Thank you, <strong id="complete-player-name">Player</strong>. Your response has been compiled and analyzed by the experiment engine.</p>
+        <p class="text-muted mb-6">To maintain the integrity of the social experiment, the psychological profiling report is hidden and sent directly to the Host's dashboard.</p>
+        
+        <div class="handover-box">
+          <i class="fa-solid fa-arrows-rotate animate-spin-slow"></i>
+          <span>Please hand the device back to the **Host** now.</span>
+        </div>
+        
+        <button class="btn btn-secondary mt-6" id="btn-restart-game">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span>Reset for Next Player</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 7: HOST LOGIN SCREEN ================= -->
+    <section class="screen hidden" id="screen-host-login">
+      <div class="glass-card max-w-sm animate-fade-in">
+        <div class="text-center mb-6">
+          <div class="icon-header">
+            <div class="lock-icon-container">
+              <i class="fa-solid fa-lock lock-icon"></i>
+            </div>
+          </div>
+          <h2>Host Dashboard</h2>
+          <p class="text-muted">Enter passcode to view player profiles.</p>
+        </div>
+        
+        <form class="welcome-form" id="host-login-form" onsubmit="event.preventDefault();">
+          <div class="input-group">
+            <label for="host-passcode">HOST PASSCODE</label>
+            <input type="password" id="host-passcode" placeholder="Default passcode is host123" required>
+            <div class="passcode-error hidden" id="login-error-msg">Incorrect passcode. Try again.</div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-login">
+              <span>Go Back</span>
+            </button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-login">
+              <span>Unlock</span>
+              <i class="fa-solid fa-unlock"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 8: HOST DASHBOARD SCREEN ================= -->
+    <section class="screen hidden" id="screen-host-dashboard">
+      <div class="dashboard-layout animate-fade-in">
+        <div class="dashboard-header">
+          <div>
+            <h2>Social Experiment Results</h2>
+            <p class="text-muted">Analyze player decisions, masks, and real drives.</p>
+          </div>
+          <div class="dashboard-actions">
+            <button class="btn btn-secondary btn-sm" id="btn-clear-data">
+              <i class="fa-solid fa-trash-can"></i>
+              <span>Clear All Data</span>
+            </button>
+            <button class="btn btn-primary btn-sm" id="btn-exit-dashboard">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Exit Dashboard</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Sidebar: Player List -->
+          <div class="glass-card sidebar-panel">
+            <div class="panel-header">
+              <h3>Players (<span id="total-players-count">0</span>)</h3>
+              <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="player-search" placeholder="Search player name...">
+              </div>
+            </div>
+            <div class="player-list-container" id="dashboard-player-list">
+              <!-- Dynamically populated player list elements -->
+              <div class="no-data-placeholder">
+                <i class="fa-regular fa-folder-open"></i>
+                <span>No player results yet</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main: Player Detail Panel -->
+          <div class="glass-card details-panel" id="dashboard-details-panel">
+            <!-- Dynamic detailed analysis reports will render here -->
+            <div class="no-data-placeholder text-center py-12">
+              <i class="fa-solid fa-fingerprint fingerprint-placeholder"></i>
+              <h3>Select a Player</h3>
+              <p class="text-muted max-w-sm mx-auto">Choose a player profile from the left sidebar to unlock their psychological breakdown, values mapping, and contradiction analysis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2026 UNMASKED Social Experiment. Strictly Confidential.</p>
+  </footer>
+
+  <!-- App Script -->
+  <script src="app.js"></script>
+</body>
+</html>
