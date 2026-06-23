@@ -379,24 +379,25 @@ p {
   align-items: center;
   gap: 1rem;
   flex: 1;
-  max-width: 400px;
+  max-width: 480px;
   margin: 0 2rem;
 }
 
 .progress-bar-track {
   flex: 1;
-  height: 6px;
+  height: 8px;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-bar-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(to right, var(--primary), #00ffaa);
+  background: linear-gradient(to right, #2ed573, #00ffaa);
   border-radius: 3px;
-  transition: width 0.4s ease-out;
+  transition: width 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 0 8px rgba(46, 213, 115, 0.4);
 }
 
 .progress-label {
@@ -404,8 +405,8 @@ p {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: var(--primary);
-  min-width: 90px;
+  color: #2ed573;
+  min-width: 120px;
   text-align: right;
 }
 
@@ -1310,6 +1311,89 @@ p {
   font-style: italic;
   font-size: 1.05rem;
   color: #fff;
+}
+
+/* Advice Card */
+.advice-card {
+  border-left: 3px solid #2ed573;
+  background: rgba(46, 213, 115, 0.03);
+}
+
+.advice-card h4 { color: #2ed573; }
+
+/* Rapport Card */
+.rapport-card {
+  border-left: 3px solid var(--primary);
+  background: rgba(0, 229, 255, 0.03);
+}
+
+.rapport-card h4 { color: var(--primary); }
+
+/* Quote Card */
+.quote-card {
+  border-left: 3px solid #a78bfa;
+  background: rgba(167, 139, 250, 0.03);
+}
+
+.quote-card h4 { color: #a78bfa; }
+
+.shareable-quote {
+  font-family: var(--font-serif) !important;
+  font-style: italic !important;
+  font-size: 1.05rem !important;
+  color: #fff !important;
+  line-height: 1.7 !important;
+}
+
+/* ===== VERDICT BLOCK ===== */
+.verdict-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.4rem 1.6rem;
+  border-radius: 14px;
+  margin-bottom: 1.5rem;
+  border: 1px solid;
+  text-align: left;
+}
+
+.verdict-block.verdict-high {
+  background: rgba(46, 213, 115, 0.06);
+  border-color: rgba(46, 213, 115, 0.25);
+}
+
+.verdict-block.verdict-mid {
+  background: rgba(255, 165, 2, 0.06);
+  border-color: rgba(255, 165, 2, 0.25);
+}
+
+.verdict-block.verdict-low {
+  background: rgba(255, 71, 87, 0.06);
+  border-color: rgba(255, 71, 87, 0.2);
+}
+
+.verdict-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.verdict-high .verdict-icon { color: #2ed573; }
+.verdict-mid .verdict-icon  { color: #ffa502; }
+.verdict-low .verdict-icon  { color: var(--accent-coral); }
+
+.verdict-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.verdict-tip {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 /* ==========================================================================

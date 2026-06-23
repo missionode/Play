@@ -5,118 +5,122 @@
 // 1. DATABASE DEFINITIONS
 
 // Core Values (Phase 1)
+// Positive (prospect-aligned) values: increase probability when chosen
+const PROSPECT_POSITIVE_VALUES = ['discretion', 'sensuality', 'luxury', 'independence', 'spontaneity'];
+
 const VALUES = {
-  compassion: {
-    id: 'compassion',
-    name: 'Compassion',
-    icon: 'fa-hand-holding-heart',
-    desc: 'Selflessness, empathy, and prioritizing the welfare of others above personal gain.'
+  discretion: {
+    id: 'discretion',
+    name: 'Discretion',
+    icon: 'fa-user-secret',
+    desc: 'Keeping connections private, valuing secrecy, and sharing only on your own terms.'
   },
-  achievement: {
-    id: 'achievement',
-    name: 'Ambition',
-    icon: 'fa-trophy',
-    desc: 'Personal success, status, gaining recognition, and making a significant mark.'
+  sensuality: {
+    id: 'sensuality',
+    name: 'Sensual Joy',
+    icon: 'fa-spa',
+    desc: 'The pleasure of touch, atmosphere, and lived physical experiences that ignite the senses.'
   },
-  security: {
-    id: 'security',
-    name: 'Security',
-    icon: 'fa-shield-halved',
-    desc: 'Safety, stability, building a comfortable foundation, and avoiding high risk.'
+  luxury: {
+    id: 'luxury',
+    name: 'Luxury',
+    icon: 'fa-gem',
+    desc: 'Surrounding yourself with quality, elegance, and experiences most people only dream of.'
   },
-  freedom: {
-    id: 'freedom',
-    name: 'Freedom',
+  independence: {
+    id: 'independence',
+    name: 'Independence',
     icon: 'fa-feather-pointed',
-    desc: 'Independence, autonomy, living without boundaries, and self-expression.'
+    desc: 'Living on your own schedule, making decisions alone, with no need for approval.'
   },
-  truth: {
-    id: 'truth',
-    name: 'Truth',
-    icon: 'fa-eye',
-    desc: 'Honesty, fact-seeking, and calling out falsehoods regardless of consequences.'
+  spontaneity: {
+    id: 'spontaneity',
+    name: 'Spontaneity',
+    icon: 'fa-bolt',
+    desc: 'Acting on desire in the moment, chasing thrills without overthinking the rules.'
   },
-  harmony: {
-    id: 'harmony',
-    name: 'Harmony',
-    icon: 'fa-handshake',
-    desc: 'Peace, belonging, keeping the peace, and maintaining social comfort.'
+  commitment: {
+    id: 'commitment',
+    name: 'Commitment',
+    icon: 'fa-ring',
+    desc: 'Building a long-term exclusive bond with one partner based on traditional expectations.'
   },
-  loyalty: {
-    id: 'loyalty',
-    name: 'Loyalty',
-    icon: 'fa-people-group',
-    desc: 'Devotion to your close group, family, or friends, even at personal cost.'
+  social_approval: {
+    id: 'social_approval',
+    name: 'Social Approval',
+    icon: 'fa-users',
+    desc: 'Making choices that your circle, family, or community would respect and celebrate.'
   },
-  pleasure: {
-    id: 'pleasure',
-    name: 'Pleasure',
-    icon: 'fa-glass-cheers',
-    desc: 'Sensory joy, fun, living in the moment, and personal enjoyment.'
+  emotional_safety: {
+    id: 'emotional_safety',
+    name: 'Emotional Safety',
+    icon: 'fa-shield-heart',
+    desc: 'Seeking connections where you feel fully protected, understood, and emotionally secure.'
   }
 };
 
 // Crucial Dilemmas (Phase 2)
-// Each dilemma pits Value A directly against Value B.
+// optionA is always the prospect-aligned choice (increases probability)
+// optionB is the traditional/non-prospect choice (decreases probability)
 const DILEMMAS = [
   {
     id: 1,
-    title: 'The Collateral Promotion',
-    valueA: 'achievement',
-    valueB: 'compassion',
-    scenario: 'A colleague is about to be fired for a major team project error you both contributed to. However, stepping forward to share the blame means you will definitely lose the dream promotion you\'ve worked two years to secure.',
+    title: 'The Secret Weekend',
+    valueA: 'discretion',
+    valueB: 'social_approval',
+    scenario: 'A charming, attentive companion offers you an all-expenses paid luxury weekend getaway — no strings attached, completely private. Your close friends would be shocked if they knew. No one ever needs to find out.',
     optionA: {
-      text: 'Say nothing. Let your colleague take the fall, securing your promotion. You rationalize it as a tough business environment.',
-      summary: 'Chose career success over saving a colleague.'
+      text: 'Accept. You deserve this. What happens privately is entirely your business, and the experience sounds extraordinary.',
+      summary: 'Chose private luxury and discretion over social image.'
     },
     optionB: {
-      text: 'Speak up to share the blame. You preserve your colleague\'s job, but your promotion is cancelled and your standing suffers.',
-      summary: 'Chose to help a colleague at a direct career cost.'
+      text: 'Decline. Even though it sounds amazing, you could never do something your circle would not approve of.',
+      summary: 'Chose social approval over personal desire.'
     }
   },
   {
     id: 2,
-    title: 'The Heartbreaking Secret',
-    valueA: 'truth',
-    valueB: 'harmony',
-    scenario: 'You find undeniable proof that your best friend’s partner is cheating on them. If you tell them, it will break their heart and throw their life into chaos. If you stay quiet, they will marry happily next month, unaware.',
+    title: 'The Premium Experience',
+    valueA: 'luxury',
+    valueB: 'commitment',
+    scenario: 'You are in a long, stable, but emotionally distant relationship. A rare opportunity arises for a breathtaking, emotionally rich experience with someone fascinating — a once-in-a-lifetime connection. Your partner would never know.',
     optionA: {
-      text: 'Tell your friend the truth immediately, presenting the proof and facing the painful emotional fallout.',
-      summary: 'Chose painful truth over comfortable silence.'
+      text: 'Pursue the experience. Life is short, and richness of living matters more than hollow routine.',
+      summary: 'Chose rare personal richness over routine commitment.'
     },
     optionB: {
-      text: 'Burn the proof and keep the secret. You choose to preserve their current peace and happiness.',
-      summary: 'Chose comfortable silence to protect harmony.'
+      text: 'Walk away. You made a commitment and that boundary is absolute, regardless of the emotional gap at home.',
+      summary: 'Chose strict commitment over personal desire.'
     }
   },
   {
     id: 3,
-    title: 'The Golden Cage',
-    valueA: 'security',
-    valueB: 'freedom',
-    scenario: 'You are offered a massive multi-year contract that pays triple your current freelance rate, but it requires wearing an AI tracker, installing strict workplace surveillance on your home PC, and agreeing to absolute censorship on what you publish online.',
+    title: 'Terms on the Table',
+    valueA: 'independence',
+    valueB: 'emotional_safety',
+    scenario: 'Someone attractive and sophisticated proposes a clear, mutually agreed arrangement — both parties know exactly what this is and what it is not. It is upfront, direct, and completely on your terms. No emotional entanglement.',
     optionA: {
-      text: 'Sign the contract. You secure financial safety and luxury for your family, sacrificing your freedom of expression.',
-      summary: 'Chose financial security over autonomy.'
+      text: 'Agree. You appreciate honesty and clarity. This arrangement respects your freedom and your intelligence.',
+      summary: 'Chose clarity and independence over emotional entanglement.'
     },
     optionB: {
-      text: 'Reject the contract. You continue in your low-paying freelance gig, preserving your absolute independence and speech.',
-      summary: 'Chose freedom and independence over financial safety.'
+      text: 'Decline. You need emotional closeness and safety before any kind of intimacy. This feels too transactional.',
+      summary: 'Chose emotional safety over direct, clear arrangements.'
     }
   },
   {
     id: 4,
-    title: 'The Reluctant Mover',
-    valueA: 'loyalty',
-    valueB: 'pleasure',
-    scenario: 'Your sibling desperately needs you to help them move apartments on the only free weekend you\'ve had in six months, which you planned to spend relaxing at a premium luxury resort you\'ve already paid $800 for (non-refundable).',
+    title: 'The Midnight Invitation',
+    valueA: 'spontaneity',
+    valueB: 'social_approval',
+    scenario: 'A sophisticated stranger sends you a last-minute invitation to an exclusive private gathering — high-end, discreet, exciting. You have no idea who else will be there. It breaks your usual routine completely.',
     optionA: {
-      text: 'Cancel your resort trip, lose the $800, and spend your weekend carrying heavy boxes for your sibling.',
-      summary: 'Canceled plans and lost money to support family.'
+      text: 'Say yes. Excitement doesn\'t wait for a perfect schedule. You get dressed and go.',
+      summary: 'Chose spontaneous adventure over predictable routine.'
     },
     optionB: {
-      text: 'Make up a believable excuse about being ill, go to the luxury resort, and enjoy your paid relaxation.',
-      summary: 'Chose personal enjoyment over sibling loyalty.'
+      text: 'Decline. It feels reckless. You need to know more about the people involved before committing to anything.',
+      summary: 'Chose caution and approval over spontaneous excitement.'
     }
   }
 ];
@@ -142,7 +146,10 @@ let gameState = {
   dilemmaIndex: 0,         // Active dilemma index (0 to 3)
   dilemmaAnswers: [],      // Choices made: { dilemmaId, selectedValue, chosenText, rejectedText, timeTaken }
   dilemmaStartTime: 0,
-  dilemmaTimerInterval: null
+  dilemmaTimerInterval: null,
+
+  // Prospect Probability (live tracking)
+  prospectProbability: 50  // Starts at 50%, updated in real time
 };
 
 // 3. INITIALIZATION & ROUTING
@@ -168,7 +175,7 @@ function setupEventListeners() {
     initPhase1();
     transitionToScreen('screen-phase1-game');
     document.getElementById('game-progress').classList.remove('hidden');
-    updateProgressBar(0, 'Phase 1: Bracket Sorter');
+    updateProbabilityBar();
   });
 
   // Choice Cards Clicks
@@ -187,7 +194,7 @@ function setupEventListeners() {
   document.getElementById('btn-start-phase2').addEventListener('click', () => {
     initPhase2();
     transitionToScreen('screen-phase2-game');
-    updateProgressBar(50, 'Phase 2: The Crucible');
+    updateProbabilityBar();
   });
 
   // Dilemma Cards Clicks
@@ -300,6 +307,14 @@ function updateProgressBar(percentage, labelText) {
   label.textContent = `${labelText} (${Math.round(percentage)}%)`;
 }
 
+function updateProbabilityBar() {
+  const prob = Math.min(100, Math.max(0, gameState.prospectProbability));
+  const fill = document.getElementById('progress-fill');
+  const label = document.getElementById('progress-text');
+  fill.style.width = `${prob}%`;
+  label.textContent = `Match Probability: ${Math.round(prob)}%`;
+}
+
 function resetGame() {
   clearInterval(gameState.dilemmaTimerInterval);
   gameState = {
@@ -315,9 +330,10 @@ function resetGame() {
     dilemmaIndex: 0,
     dilemmaAnswers: [],
     dilemmaStartTime: 0,
-    dilemmaTimerInterval: null
+    dilemmaTimerInterval: null,
+    prospectProbability: 50
   };
-  document.getElementById('player-name').value = '';
+  document.getElementById('player-name').value = 'Star';
   document.getElementById('game-progress').classList.add('hidden');
 }
 
@@ -415,7 +431,7 @@ function getMatchProgressNumber() {
 
 function handleBracketChoice(cardId) {
   const endTime = performance.now();
-  const timeTaken = (endTime - gameState.p1StartTime) / 1000; // in seconds
+  const timeTaken = (endTime - gameState.p1StartTime) / 1000;
 
   const cardA = document.getElementById('choice-a');
   const cardB = document.getElementById('choice-b');
@@ -441,62 +457,51 @@ function handleBracketChoice(cardId) {
   });
 
   // Assign bracket placement points
-  // Quarter-final losers: 0 pts
-  // Semi-final losers: 1 pt
-  // Final runner-up: 2 pts
-  // Grand Winner: 3 pts
   gameState.valuePoints[loserKey] = gameState.roundIndex - 1;
+
+  // === LIVE PROBABILITY UPDATE ===
+  // Winning a positive value over a negative one: +3%
+  // Winning a negative value over a positive one: -3%
+  const winnerIsPositive = PROSPECT_POSITIVE_VALUES.includes(winnerKey);
+  const loserIsPositive = PROSPECT_POSITIVE_VALUES.includes(loserKey);
+  if (winnerIsPositive && !loserIsPositive) {
+    gameState.prospectProbability = Math.min(100, gameState.prospectProbability + 3);
+  } else if (!winnerIsPositive && loserIsPositive) {
+    gameState.prospectProbability = Math.max(5, gameState.prospectProbability - 3);
+  }
+  updateProbabilityBar();
 
   // Track elimination
   gameState.eliminatedValues.push(loserKey);
-  
-  // Highlight eliminated in the list
   const loserPill = document.getElementById(`pill-${loserKey}`);
   if (loserPill) {
     loserPill.classList.remove('active');
     loserPill.classList.add('eliminated');
   }
 
-  // Update current bracket list
-  // Replace the pair in-place in the next round buffer or manage matchup list
   gameState.bracketValues[gameState.matchIndex] = winnerKey;
-
   gameState.matchIndex++;
 
-  // Check if round is complete
   const expectedMatchesInRound = { 1: 4, 2: 2, 3: 1 }[gameState.roundIndex];
 
   if (gameState.matchIndex >= expectedMatchesInRound) {
-    // End of round
     if (gameState.roundIndex === 3) {
-      // Grand tournament complete!
       gameState.valuePoints[winnerKey] = 3;
-      
       const winnerPill = document.getElementById(`pill-${winnerKey}`);
-      if (winnerPill) {
-        winnerPill.classList.add('winner-crown');
-      }
+      if (winnerPill) winnerPill.classList.add('winner-crown');
 
       setTimeout(() => {
         transitionToScreen('screen-phase2-intro');
-        updateProgressBar(50, 'Phase 1 Complete');
+        updateProbabilityBar();
       }, 800);
     } else {
-      // Advance to next round
-      // Shrink bracketValues array to contain only winners (first half of array)
       gameState.bracketValues = gameState.bracketValues.slice(0, expectedMatchesInRound);
       gameState.roundIndex++;
       gameState.matchIndex = 0;
-      
-      setTimeout(() => {
-        loadNextBracketMatch();
-      }, 300);
+      setTimeout(() => { loadNextBracketMatch(); }, 300);
     }
   } else {
-    // Next match in current round
-    setTimeout(() => {
-      loadNextBracketMatch();
-    }, 300);
+    setTimeout(() => { loadNextBracketMatch(); }, 300);
   }
 }
 
@@ -514,24 +519,19 @@ function initPhase2() {
 function loadDilemma() {
   const dilemma = DILEMMAS[gameState.dilemmaIndex];
   
-  // Render descriptions
-  document.getElementById('p2-dilemma-title').textContent = `Dilemma ${dilemma.id} of 4`;
+  document.getElementById('p2-dilemma-title').textContent = `Scenario ${dilemma.id} of 4`;
   document.getElementById('p2-scenario-title').textContent = dilemma.title;
   document.getElementById('p2-scenario-desc').textContent = dilemma.scenario;
 
-  // Options cards texts
   document.getElementById('dilemma-choice-a-text').textContent = dilemma.optionA.text;
   document.getElementById('dilemma-choice-b-text').textContent = dilemma.optionB.text;
   
-  // Bind values associated with option keys
   document.getElementById('dilemma-choice-a').dataset.valueKey = dilemma.valueA;
   document.getElementById('dilemma-choice-b').dataset.valueKey = dilemma.valueB;
 
-  // Reset progress bar (Phase 2 covers 50% to 90%)
-  const progressPercent = 50 + (gameState.dilemmaIndex / 4 * 40);
-  updateProgressBar(progressPercent, `Crucible Dilemma ${dilemma.id}/4`);
+  // Show current probability during phase 2
+  updateProbabilityBar();
 
-  // Start micro-timer
   gameState.dilemmaStartTime = performance.now();
   startDilemmaTimer();
 }
@@ -565,14 +565,19 @@ function handleDilemmaChoice(cardId) {
     chosenText = currentDilemma.optionA.summary;
     rejectedVal = valB;
     rejectedText = currentDilemma.optionB.summary;
+    // Option A is always the prospect-positive choice: +10%
+    gameState.prospectProbability = Math.min(100, gameState.prospectProbability + 10);
   } else {
     selectedVal = valB;
     chosenText = currentDilemma.optionB.summary;
     rejectedVal = valA;
     rejectedText = currentDilemma.optionA.summary;
+    // Option B is always the traditional/non-prospect choice: -10%
+    gameState.prospectProbability = Math.max(5, gameState.prospectProbability - 10);
   }
 
-  // Save response
+  updateProbabilityBar();
+
   gameState.dilemmaAnswers.push({
     dilemmaId: currentDilemma.id,
     selectedValue: selectedVal,
@@ -585,19 +590,14 @@ function handleDilemmaChoice(cardId) {
   gameState.dilemmaIndex++;
 
   if (gameState.dilemmaIndex >= DILEMMAS.length) {
-    // Phase 2 finished! Process report and compile profile.
     compilePlayerReport();
-    updateProgressBar(100, 'Experiment Finished');
-    
+    updateProbabilityBar();
     setTimeout(() => {
       document.getElementById('complete-player-name').textContent = gameState.playerName;
       transitionToScreen('screen-complete');
     }, 600);
   } else {
-    // Next dilemma
-    setTimeout(() => {
-      loadDilemma();
-    }, 300);
+    setTimeout(() => { loadDilemma(); }, 300);
   }
 }
 
@@ -609,8 +609,9 @@ function handleDilemmaChoice(cardId) {
 function compilePlayerReport() {
   const points = gameState.valuePoints;
   const answers = gameState.dilemmaAnswers;
-  
-  // Find abstract winner (bracket winner)
+  const finalProbability = Math.min(100, Math.max(0, gameState.prospectProbability));
+
+  // Find bracket winner (highest ranked value)
   let bracketWinner = '';
   let highestPts = -1;
   Object.keys(points).forEach(key => {
@@ -620,98 +621,64 @@ function compilePlayerReport() {
     }
   });
 
-  // 1. Calculate Authenticity / Alignment Score
-  // For each dilemma, compare player choice against their Phase 1 relative ranking preference.
-  let contradictions = [];
-  let alignedCount = 0;
-  
-  answers.forEach(ans => {
-    const scoreA = points[ans.selectedValue];
-    const scoreB = points[ans.rejectedValue];
-    
-    let isAligned = true;
-    
-    // Contradiction occurs if player chooses value with lower bracket score (they valued it less abstractly but picked it under pressure)
-    if (scoreA < scoreB) {
-      isAligned = false;
-      contradictions.push({
-        dilemmaId: ans.dilemmaId,
-        declaredBetterValue: ans.rejectedValue,
-        chosenLesserValue: ans.selectedValue,
-        actionChosen: ans.chosenText,
-        actionRejected: ans.rejectedText,
-        timeTaken: ans.timeTaken
-      });
-    } else {
-      alignedCount++;
-    }
-  });
-
-  // Simple Authenticity scale: 4 dilemmas.
-  // 4 aligned = 100%
-  // 3 aligned = 75%
-  // 2 aligned = 50%
-  // 1 aligned = 25%
-  // 0 aligned = 0%
-  const authenticityScore = (alignedCount / DILEMMAS.length) * 100;
-
-  // 2. Identify Archetype
-  let archetype = '';
-  let description = '';
-  let icebreaker = '';
-
-  if (authenticityScore >= 75) {
-    if (bracketWinner === 'compassion' || bracketWinner === 'loyalty' || bracketWinner === 'truth') {
-      archetype = 'The Quiet Saint';
-      description = 'A rare breed of genuine integrity. They put community, trust, and others above themselves in theory, and stay true to that path even when it costs them real money or status.';
-      icebreaker = `"${gameState.playerName}, you showed incredible alignment between your ideals and your actions. Do you ever regret putting others first, or does it come naturally?"`;
-    } else if (bracketWinner === 'achievement' || bracketWinner === 'security' || bracketWinner === 'pleasure') {
-      archetype = 'The Honest Pragmatist';
-      description = 'Refreshing, raw, and highly practical. They do not put on a moral show or claim to be selfless. They openly value status, comfort, or safety, and act consistently on those motives.';
-      icebreaker = `"${gameState.playerName}, you don't hide your ambition or desire for comfort. Does society pressure you to pretend to be more selfless than you actually are?"`;
-    } else {
-      archetype = 'The Autonomous Maverick';
-      description = 'Highly values personal freedom and independent actions. They choose their own path and will reject comfort or money to preserve their boundaries and speech.';
-      icebreaker = `"${gameState.playerName}, you consistently chose independence. What is the one thing you would never sacrifice for a high paycheck?"`;
-    }
-  } else if (authenticityScore >= 50) {
-    // Mid range alignment
-    if (bracketWinner === 'freedom') {
-      archetype = 'The Free Spirit';
-      description = 'Principled but highly flexible. They lean heavily towards freedom and personal agency, occasionally stepping out of bounds but generally acting in alignment with their values.';
-      icebreaker = `"${gameState.playerName}, you values liberty highly. When was the last time you felt caged in your daily routine?"`;
-    } else {
-      archetype = 'The Adaptive Planner';
-      description = 'A balanced realist. They strive to do good but understand that self-preservation is necessary. They display some contradictions but adjust choices logically based on stakes.';
-      icebreaker = `"${gameState.playerName}, you showed moderate alignment. Do you believe morals are absolute, or do they change depending on how high the stakes are?"`;
-    }
+  // Simple verdict based on final probability
+  let verdict, verdictClass, verdictIcon;
+  if (finalProbability >= 75) {
+    verdict = 'Perfect Match (High Interest)';
+    verdictClass = 'verdict-high';
+    verdictIcon = 'fa-fire';
+  } else if (finalProbability >= 50) {
+    verdict = 'Warm Match (Medium Interest)';
+    verdictClass = 'verdict-mid';
+    verdictIcon = 'fa-temperature-half';
   } else {
-    // Low alignment (Authenticity <= 25%)
-    // Check if they claim to value compassion/loyalty but choose achievement/pleasure
-    const choseSelfishOptions = answers.some(ans => 
-      (ans.selectedValue === 'achievement' && ans.rejectedValue === 'compassion') ||
-      (ans.selectedValue === 'pleasure' && ans.rejectedValue === 'loyalty')
-    );
-
-    if (choseSelfishOptions) {
-      archetype = 'The Secret Boss';
-      description = 'Presents a highly polished, selfless mask in public (values compassion and loyalty). However, when forced to make a real choice, they swiftly pivot to competitive self-interest and status.';
-      icebreaker = `"${gameState.playerName}, you claim that helping others is a top value, but when it came to a promotion or personal money, you saved yourself. Do you think nice guys finish last?"`;
-    } else {
-      archetype = 'The Masked Chameleon';
-      description = 'Highly inconsistent decision profile. They display massive contradictions between their claimed values and real reactions, indicating high susceptibility to pressure and external situations.';
-      icebreaker = `"${gameState.playerName}, your choices contradicted your stated ideals on almost every front. Are you still trying to figure out what you actually stand for?"`;
-    }
+    verdict = 'Cold Match (Low Interest / Non-Prospect)';
+    verdictClass = 'verdict-low';
+    verdictIcon = 'fa-snowflake';
   }
 
-  // 3. Reaction speed profiling
-  // Classify reaction speed
-  const p1Times = gameState.p1Matches.map(m => m.time);
+  // Archetype, Advice, Quote, Rapport & Persuasion based on dominant value & probability
+  let archetype, rapportAdvice, shareableQuote, persuasionScript, hostAdvice;
+
+  const dominant = bracketWinner;
+
+  if (finalProbability >= 75) {
+    if (dominant === 'sensuality' || dominant === 'luxury') {
+      archetype = 'The Pleasure Seeker';
+      rapportAdvice = 'She values quality experiences deeply. Open with complimenting something specific about her presence — her energy, style, or a detail in her environment. Ask her about the last time she truly indulged herself.';
+      shareableQuote = '"The most luxurious thing a person can own is the freedom to experience life on their own terms."';
+      persuasionScript = `"I get the sense you know what you want, and you don't settle for less. I'd love to offer you something that matches that standard — private, curated, and completely on your terms. No drama, no expectations. Just the finest experience."` ;
+      hostAdvice = 'She is highly receptive. Mirror her energy — be polished and confident. Lean in slowly, not aggressively. Mention exclusivity: "This is for a very specific kind of person."';
+    } else if (dominant === 'discretion' || dominant === 'independence') {
+      archetype = 'The Discreet Adventurer';
+      rapportAdvice = 'Build trust by signaling that you value privacy as much as she does. Mention that you never discuss your encounters. Ask open-ended questions about what she does for herself — not for others.';
+      shareableQuote = '"True freedom is doing what you want, with who you want, without anyone needing to know."';
+      persuasionScript = `"What we do stays between us — always. I have a strict privacy policy. No photos, no names, no traces. The kind of arrangement most people only dream about — but never get to experience."` ;
+      hostAdvice = 'She will not be won over by small talk. Signal competence and discretion immediately. Let her drive the pace, but gently suggest the idea of an exclusive arrangement.';
+    } else {
+      archetype = 'The Spontaneous Explorer';
+      rapportAdvice = 'She is drawn to thrill and immediacy. Suggest something unexpected — an invitation, a mysterious plan. Do not over-explain. Use intrigue as the hook.';
+      shareableQuote = '"The best stories begin with an unexpected yes."';
+      persuasionScript = `"I usually don't ask twice — but I have a feeling you're someone who appreciates saying yes to the right things at the right moment. This would be one of those moments."` ;
+      hostAdvice = 'Move fast but smoothly. Hesitation will kill the mood. Plant the seed of something exciting and let her curiosity pull her in.';
+    }
+  } else if (finalProbability >= 50) {
+    archetype = 'The Curious Independent';
+    rapportAdvice = 'She is open but cautious. She needs to feel safe before she is open. Build warmth first — ask about her passions, her lifestyle. Do not rush.';
+    shareableQuote = '"Some of the most beautiful experiences happen when you trust your instincts just a little more than your fears."';
+    persuasionScript = `"I'd love to just talk more — no pressure. I find you genuinely interesting, and I'd like to get to know what kind of experiences really excite you. What's something you've always wanted to try but never found the right person to try it with?"` ;
+    hostAdvice = 'She scored in the middle range. She could go either way. Focus on comfort and connection first. Qualify her more before making any direct move. This session is about building rapport, not closing.';
+  } else {
+    archetype = 'The Traditional Romantic';
+    rapportAdvice = 'She is not aligned with the service at this time. She prioritizes emotional safety and social approval. Engaging her directly is high risk. Gracefully transition to friendly conversation and exit.';
+    shareableQuote = '"Not every flower blooms in every season — and that is perfectly okay."';
+    persuasionScript = `"I really enjoyed talking with you. I don't think this is the right moment for us to connect on a deeper level, but I hope we cross paths again sometime."` ;
+    hostAdvice = 'She is a Non-Prospect at this time. Do NOT pursue an arrangement. She is motivated by social reputation and traditional values. Respectfully disengage. There is no risk as long as you keep it friendly.';
+  }
+
+  // Decision speed
   const p2Times = answers.map(a => a.timeTaken);
-
-  const avgP1Time = p1Times.reduce((a, b) => a + b, 0) / p1Times.length;
-  const avgP2Time = p2Times.reduce((a, b) => a + b, 0) / p2Times.length;
-
+  const avgP2Time = p2Times.reduce((a, b) => a + b, 0) / (p2Times.length || 1);
   let slowestDilemma = null;
   let maxDilemmaTime = -1;
   answers.forEach((ans, idx) => {
@@ -720,37 +687,34 @@ function compilePlayerReport() {
       slowestDilemma = DILEMMAS[idx].title;
     }
   });
+  const speedVerdict = avgP2Time < 2.5 ? 'Impulsive & Decisive' : avgP2Time > 6 ? 'Deeply Conflicted' : 'Measured & Thoughtful';
 
-  const speedVerdict = avgP2Time < 2.5 
-    ? 'Impulsive & Decisive' 
-    : avgP2Time > 5 
-      ? 'Intense Cognitive Contention' 
-      : 'Calculated & Moderate';
-
-  // 4. Save Session Report
+  // Save Session Report
   const sessionReport = {
     id: Date.now().toString(),
     playerName: gameState.playerName,
     datePlayed: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-    authenticityScore: authenticityScore,
+    prospectProbability: Math.round(finalProbability),
+    verdict: verdict,
+    verdictClass: verdictClass,
+    verdictIcon: verdictIcon,
     archetype: archetype,
-    description: description,
-    icebreaker: icebreaker,
-    bracketWinner: VALUES[bracketWinner].name,
-    bracketWinnerIcon: VALUES[bracketWinner].icon,
+    rapportAdvice: rapportAdvice,
+    shareableQuote: shareableQuote,
+    persuasionScript: persuasionScript,
+    hostAdvice: hostAdvice,
+    bracketWinner: VALUES[bracketWinner] ? VALUES[bracketWinner].name : bracketWinner,
+    bracketWinnerIcon: VALUES[bracketWinner] ? VALUES[bracketWinner].icon : 'fa-star',
     dilemmaAnswers: answers,
-    contradictions: contradictions,
     decisionSpeedVerdict: speedVerdict,
     avgDilemmaTime: avgP2Time.toFixed(1),
     slowestDilemma: slowestDilemma,
-    slowestTime: maxDilemmaTime.toFixed(1)
+    slowestTime: maxDilemmaTime > 0 ? maxDilemmaTime.toFixed(1) : '—'
   };
 
-  // Push to local storage database
   const activeSessions = JSON.parse(localStorage.getItem('unmasked_sessions') || '[]');
-  activeSessions.unshift(sessionReport); // Add to beginning of list
+  activeSessions.unshift(sessionReport);
   localStorage.setItem('unmasked_sessions', JSON.stringify(activeSessions));
-  
   loadDashboardData();
 }
 
@@ -786,21 +750,17 @@ function renderPlayerList(sessions) {
     item.className = 'player-list-item animate-fade-in';
     item.id = `player-item-${session.id}`;
     
-    // Authenticity color indicator
-    const authColorClass = session.authenticityScore >= 75 
-      ? 'auth-high' 
-      : session.authenticityScore >= 50 
-        ? 'auth-mid' 
-        : 'auth-low';
+    const prob = session.prospectProbability || 0;
+    const probColorClass = prob >= 75 ? 'auth-high' : prob >= 50 ? 'auth-mid' : 'auth-low';
 
     item.innerHTML = `
       <div class="player-list-item-header">
         <span class="player-list-item-name">${escapeHTML(session.playerName)}</span>
-        <span class="player-list-item-score ${authColorClass}">${session.authenticityScore}%</span>
+        <span class="player-list-item-score ${probColorClass}">${prob}%</span>
       </div>
       <div class="player-list-item-meta">
-        <span>${session.archetype}</span>
-        <span>${session.datePlayed.split(',')[0]}</span>
+        <span>${session.verdict || session.archetype}</span>
+        <span>${(session.datePlayed || '').split(',')[0]}</span>
       </div>
     `;
 
@@ -829,58 +789,36 @@ function selectPlayerForDetail(sessionId) {
 function renderPlayerDetails(session) {
   const panel = document.getElementById('dashboard-details-panel');
   
-  // Determine color coding for status bar
-  const pct = session.authenticityScore;
-  const barColor = pct >= 75 ? '#2ed573' : pct >= 50 ? '#ffa502' : '#ff4757';
+  const prob = session.prospectProbability || 0;
+  const barColor = prob >= 75 ? '#2ed573' : prob >= 50 ? '#ffa502' : '#ff4757';
 
-  // Build key contradictions HTML list
-  let contradictionsHTML = '';
-  if (session.contradictions.length === 0) {
-    contradictionsHTML = `
-      <div class="contradiction-item aligned">
-        <div class="contradiction-title">
-          <span>Perfect Core Alignment</span>
-          <span class="contradiction-badge pass">PASSED</span>
-        </div>
-        <p class="desc text-muted">This player did not exhibit any value trade-off compromises during testing. Their actual actions matched their stated ideals 100%.</p>
-      </div>
-    `;
-  } else {
-    session.contradictions.forEach(contra => {
-      const declaredVal = VALUES[contra.declaredBetterValue];
-      const lesserVal = VALUES[contra.chosenLesserValue];
-      
-      contradictionsHTML += `
-        <div class="contradiction-item">
+  // Build dilemma choices summary HTML
+  let choicesSummaryHTML = '';
+  if (session.dilemmaAnswers && session.dilemmaAnswers.length > 0) {
+    session.dilemmaAnswers.forEach((ans, idx) => {
+      const dil = DILEMMAS[idx];
+      const isPositive = PROSPECT_POSITIVE_VALUES.includes(ans.selectedValue);
+      choicesSummaryHTML += `
+        <div class="contradiction-item ${isPositive ? 'aligned' : ''}">
           <div class="contradiction-title">
-            <span>Value Trade-Off Mismatch</span>
-            <span class="contradiction-badge fail">CONTRADICTION</span>
+            <span>${dil ? dil.title : 'Scenario ' + (idx + 1)}</span>
+            <span class="contradiction-badge ${isPositive ? 'pass' : 'fail'}">${isPositive ? 'OPEN' : 'CLOSED'}</span>
           </div>
-          <div class="contradiction-details">
-            <div class="contra-row">
-              <span class="contra-label">Stated Value:</span>
-              <span class="contra-value val-ideal">${declaredVal.name}</span>
-            </div>
-            <div class="contra-row">
-              <span class="contra-label">Actual Action:</span>
-              <span class="contra-value val-real">${contra.actionChosen}</span>
-            </div>
-            <div class="contra-row">
-              <span class="contra-label">Compromised:</span>
-              <span class="contra-value">Abandoned ${declaredVal.name} for ${lesserVal.name}</span>
-            </div>
-            <div class="contra-row">
-              <span class="contra-label">Decision Time:</span>
-              <span class="contra-timing">${contra.timeTaken.toFixed(1)} seconds</span>
-            </div>
+          <div class="contra-row">
+            <span class="contra-label">Chose:</span>
+            <span class="contra-value ${isPositive ? 'val-ideal' : 'val-real'}">${ans.chosenText}</span>
+          </div>
+          <div class="contra-row">
+            <span class="contra-label">Speed:</span>
+            <span class="contra-timing">${ans.timeTaken.toFixed(1)}s</span>
           </div>
         </div>
       `;
     });
   }
 
-  // Render HTML structure of player analysis
   panel.innerHTML = `
+    <!-- Profile Header -->
     <div class="profile-header animate-slide-up">
       <div class="profile-meta-main">
         <h2>${escapeHTML(session.playerName)}</h2>
@@ -894,35 +832,41 @@ function renderPlayerDetails(session) {
       </div>
     </div>
 
-    <!-- Authenticity Rating Meter -->
+    <!-- ===== MATCH PROBABILITY METER ===== -->
     <div class="authenticity-section animate-slide-up">
       <div class="authenticity-header">
-        <span class="authenticity-title">Authenticity Index</span>
-        <span class="authenticity-percentage" style="color: ${barColor}">${session.authenticityScore}%</span>
+        <span class="authenticity-title">Match Probability</span>
+        <span class="authenticity-percentage" style="color: ${barColor}">${prob}%</span>
       </div>
       <div class="authenticity-bar-track">
-        <div class="authenticity-bar-fill" style="width: ${session.authenticityScore}%; background: ${barColor}"></div>
+        <div class="authenticity-bar-fill" style="width: ${prob}%; background: ${barColor}"></div>
       </div>
-      <p class="authenticity-desc">
-        ${session.authenticityScore >= 75 
-          ? 'Highly authentic. Stated ideals are consistently executed when presented with realistic consequences.' 
-          : session.authenticityScore >= 50 
-            ? 'Moderately aligned. Some adjustments made under pressure, but maintains core beliefs under standard conditions.' 
-            : 'Low alignment. Features notable discrepancy between claimed priorities and self-preserving actions.'}
-      </p>
     </div>
 
-    <!-- Ideal vs Real Comparison -->
+    <!-- ===== SIMPLE VERDICT ===== -->
+    <div class="verdict-block animate-slide-up verdict-${prob >= 75 ? 'high' : prob >= 50 ? 'mid' : 'low'}">
+      <div class="verdict-icon"><i class="fa-solid ${session.verdictIcon || 'fa-circle-dot'}"></i></div>
+      <div class="verdict-content">
+        <div class="verdict-title">${session.verdict}</div>
+        <div class="verdict-tip">
+          ${prob >= 75 ? '<strong>What this means:</strong> Very likely to be interested in a professional intimate arrangement. Safe to engage with confidence.' :
+            prob >= 50 ? '<strong>What this means:</strong> Possibly open but has hesitations. Proceed with care, build more trust first.' :
+            '<strong>What this means:</strong> Not aligned with the service at this time. Traditional values dominate. Engage only as a friend — do not propose an arrangement.'}
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Row -->
     <div class="comparison-grid animate-slide-up">
       <div class="side-comparison-card">
-        <span class="comparison-label">Ideal Value Winner</span>
+        <span class="comparison-label">Top Desire Value</span>
         <span class="comparison-value val-ideal">
           <i class="fa-solid ${session.bracketWinnerIcon}"></i>
           ${session.bracketWinner}
         </span>
       </div>
       <div class="side-comparison-card">
-        <span class="comparison-label">Decision Speed Mode</span>
+        <span class="comparison-label">Decision Speed</span>
         <span class="comparison-value">
           <i class="fa-solid fa-gauge-high"></i>
           ${session.decisionSpeedVerdict}
@@ -930,31 +874,38 @@ function renderPlayerDetails(session) {
       </div>
     </div>
 
-    <!-- Psych evaluation -->
-    <div class="dashboard-segment-title animate-slide-up">Behavioral Breakdown</div>
-    <div class="psychology-text-card animate-slide-up">
-      <h4>Archetype Definition</h4>
-      <p>${session.description}</p>
+    <!-- ===== HOST ADVICE ===== -->
+    <div class="dashboard-segment-title animate-slide-up">🎯 Host Strategy Advice</div>
+    <div class="psychology-text-card advice-card animate-slide-up">
+      <h4>How to Handle This Person Now</h4>
+      <p>${session.hostAdvice}</p>
     </div>
 
-    <!-- Speed diagnostics -->
-    <div class="psychology-text-card animate-slide-up">
-      <h4>Cognitive Friction Diagnostics</h4>
-      <p>Average time taken on moral choices was <strong>${session.avgDilemmaTime}s</strong>. 
-      The player hesitated longest on <strong>${session.slowestDilemma}</strong> taking <strong>${session.slowestTime}s</strong> to reach a decision.</p>
+    <!-- ===== RAPPORT BUILDER ===== -->
+    <div class="dashboard-segment-title animate-slide-up">🤝 Rapport Builder</div>
+    <div class="psychology-text-card rapport-card animate-slide-up">
+      <h4>How to Build Connection With Her</h4>
+      <p>${session.rapportAdvice}</p>
     </div>
 
-    <!-- Mismatch lists -->
-    <div class="dashboard-segment-title animate-slide-up">Ideal vs. Concrete Discrepancies</div>
-    <div class="contradictions-list animate-slide-up">
-      ${contradictionsHTML}
+    <!-- ===== SHAREABLE QUOTE ===== -->
+    <div class="dashboard-segment-title animate-slide-up">💬 Quote to Share With Her</div>
+    <div class="psychology-text-card quote-card animate-slide-up">
+      <h4>Use This in Conversation</h4>
+      <p class="shareable-quote">${session.shareableQuote}</p>
     </div>
 
-    <!-- Icebreaker prompt card -->
-    <div class="dashboard-segment-title animate-slide-up">Host Inquiry Prompt</div>
+    <!-- ===== PERSUASION SCRIPT ===== -->
+    <div class="dashboard-segment-title animate-slide-up">🗣 Persuasion Script</div>
     <div class="psychology-text-card icebreaker-card animate-slide-up">
-      <h4>Confrontation / Icebreaker Starter</h4>
-      <p>${session.icebreaker}</p>
+      <h4>Say This to Her — Word for Word</h4>
+      <p>${session.persuasionScript}</p>
+    </div>
+
+    <!-- ===== SCENARIO CHOICES ===== -->
+    <div class="dashboard-segment-title animate-slide-up">📋 Her Scenario Choices</div>
+    <div class="contradictions-list animate-slide-up">
+      ${choicesSummaryHTML}
     </div>
   `;
 }

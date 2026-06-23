@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UNMASKED • The Social Experiment Game</title>
-  <meta name="description" content="A psychological social experiment game that unmasks your true character by analyzing the gap between your ideal values and your decisions under pressure.">
+  <title>UNMASKED • Desire Alignment Game</title>
+  <meta name="description" content="A premium psychological compatibility game that unmasks your connection preferences and lifestyle values.">
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,13 +51,13 @@
             <i class="fa-solid fa-mask mask-icon"></i>
           </div>
         </div>
-        <h1>Reveal Your Real Face</h1>
-        <p class="subtitle">We all wear masks. We tell ourselves we value one thing, but under pressure, our choices tell a different story. This short game analyzes your ideal values against practical dilemmas to uncover your true behavioral profile.</p>
+        <h1>Unmask Your Desires</h1>
+        <p class="subtitle">Every relationship is built on values. This game compares your ideal connection values with real-world lifestyle decisions to map your compatibility profile. Find out where you align.</p>
         
         <form class="welcome-form" id="register-form" onsubmit="event.preventDefault();">
           <div class="input-group">
-            <label for="player-name">ENTER THE PLAYER'S NAME</label>
-            <input type="text" id="player-name" placeholder="e.g. David Miller" autocomplete="off" required>
+            <label for="player-name">PLAYER NAME</label>
+            <input type="text" id="player-name" value="Star" autocomplete="off" required>
           </div>
           <button type="submit" class="btn btn-primary" id="btn-start-game">
             <span>Begin Experiment</span>
@@ -71,11 +71,11 @@
     <section class="screen hidden" id="screen-phase1-intro">
       <div class="glass-card text-center max-w-md animate-fade-in">
         <div class="phase-badge">Phase 01</div>
-        <h2>The Ideal Self</h2>
-        <p class="mb-6">First, let's explore your aspirations. You will be presented with a series of bracket matchups pitting core human values against each other. Choose the value that you believe is **most important**.</p>
+        <h2>Connection Desires</h2>
+        <p class="mb-6">First, let's explore what you value in connection. You will face a series of bracket matchups pitting different relationship and intimacy ideals against each other. Select the one you prioritize most.</p>
         <div class="info-alert">
           <i class="fa-solid fa-circle-info"></i>
-          <span>Select the value you honestly feel represents your ideal self. There are no wrong answers.</span>
+          <span>Select the choice that honestly represents your desire. There are no wrong answers.</span>
         </div>
         <button class="btn btn-primary mt-6" id="btn-start-phase1">
           <span>Start Bracket Sorter</span>
@@ -132,11 +132,11 @@
     <section class="screen hidden" id="screen-phase2-intro">
       <div class="glass-card text-center max-w-md animate-fade-in">
         <div class="phase-badge badge-alert">Phase 02</div>
-        <h2>The Crucible</h2>
-        <p class="mb-6">The ideal self has been mapped. Now, let's step into the real world. You will face a series of high-stakes, realistic dilemmas. Each dilemma forces you to make a choice between two actions.</p>
+        <h2>Real Trade-Offs</h2>
+        <p class="mb-6">Your connection desires are set. Now, let's look at real-world decisions. You will face a series of practical scenarios. Each scenario forces you to make a choice between two actions.</p>
         <div class="info-alert alert-warning">
           <i class="fa-solid fa-triangle-exclamation"></i>
-          <span>These scenarios represent trade-offs. You must make a hard choice. Decide how you would actually act, not how you think you should.</span>
+          <span>These scenarios represent trade-offs. Select the action you would actually take in reality, not what sounds correct.</span>
         </div>
         <button class="btn btn-primary mt-6" id="btn-start-phase2">
           <span>Enter the Crucible</span>
@@ -221,7 +221,7 @@
         <form class="welcome-form" id="host-login-form" onsubmit="event.preventDefault();">
           <div class="input-group">
             <label for="host-passcode">HOST PASSCODE</label>
-            <input type="password" id="host-passcode" placeholder="Default passcode is host123" required>
+            <input type="password" id="host-passcode" placeholder="Hint: host123" required>
             <div class="passcode-error hidden" id="login-error-msg">Incorrect passcode. Try again.</div>
           </div>
           <div class="btn-group">
