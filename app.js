@@ -65,62 +65,62 @@ const VALUES = {
 const DILEMMAS = [
   {
     id: 1,
-    title: 'The Secret Weekend',
+    title: 'The Private Chakra Session for mind healing',
     valueA: 'discretion',
     valueB: 'social_approval',
-    scenario: 'A charming, attentive companion offers you an all-expenses paid luxury weekend getaway — no strings attached, completely private. Your close friends would be shocked if they knew. No one ever needs to find out.',
+    scenario: 'A highly skilled wellness practitioner offers you a completely private, all-expenses-paid luxury Chakra meditation and energy healing weekend session. The experience is deeply restorative and transformative. Your close friends and social circle would be surprised or judgmental if they knew. No one ever needs to find out.',
     optionA: {
-      text: 'Accept. You deserve this. What happens privately is entirely your business, and the experience sounds extraordinary.',
-      summary: 'Chose private luxury and discretion over social image.'
+      text: 'Accept. You deserve this nurturing time for yourself. What happens in your private wellness journey is entirely your business.',
+      summary: 'Chose discretion over social approval.'
     },
     optionB: {
-      text: 'Decline. Even though it sounds amazing, you could never do something your circle would not approve of.',
-      summary: 'Chose social approval over personal desire.'
+      text: 'Decline. Even though it sounds deeply healing, you could never do something your circle might not understand or approve of.',
+      summary: 'Chose social approval over discretion.'
     }
   },
   {
     id: 2,
-    title: 'The Premium Experience',
+    title: 'The luxury Massage Experience for a better body',
     valueA: 'luxury',
     valueB: 'commitment',
-    scenario: 'You are in a long, stable, but emotionally distant relationship. A rare opportunity arises for a breathtaking, emotionally rich experience with someone fascinating — a once-in-a-lifetime connection. Your partner would never know.',
+    scenario: 'You are living a stable but emotionally and physically draining routine. A rare opportunity arises for a breathtaking, deeply rejuvenating premium full-body massage and energy alignment session with a master practitioner — a once-in-a-lifetime level of care. No one would ever know.',
     optionA: {
-      text: 'Pursue the experience. Life is short, and richness of living matters more than hollow routine.',
-      summary: 'Chose rare personal richness over routine commitment.'
+      text: 'Pursue the experience. Life is short, and you deserve this luxurious investment in your wellbeing.',
+      summary: 'Chose luxury over commitment.'
     },
     optionB: {
-      text: 'Walk away. You made a commitment and that boundary is absolute, regardless of the emotional gap at home.',
-      summary: 'Chose strict commitment over personal desire.'
+      text: 'Walk away. You have your existing responsibilities and routines, and that boundary is absolute, regardless of how drained you feel.',
+      summary: 'Chose commitment over luxury.'
     }
   },
   {
     id: 3,
-    title: 'Terms on the Table',
+    title: 'Intimate Wellness Exploration',
     valueA: 'independence',
     valueB: 'emotional_safety',
-    scenario: 'Someone attractive and sophisticated proposes a clear, mutually agreed arrangement — both parties know exactly what this is and what it is not. It is upfront, direct, and completely on your terms. No emotional entanglement.',
+    scenario: 'A professional wellness practitioner offers a specialized private hygiene and rejuvenation session focused on intimate area cleansing and gentle energy balancing. The goal is to help you feel fresh, confident, and renewed so you can naturally surprise and enhance your current partner’s experience during intimate moments. Everything is explained clearly upfront, fully professional, and on your terms.',
     optionA: {
-      text: 'Agree. You appreciate honesty and clarity. This arrangement respects your freedom and your intelligence.',
-      summary: 'Chose clarity and independence over emotional entanglement.'
+      text: 'Agree. You appreciate the independence to take care of your own body and explore ways to bring more confidence and freshness to your relationship. Surprising your partner with renewed energy feels like a positive step.',
+      summary: 'Chose independence over emotional safety.'
     },
     optionB: {
-      text: 'Decline. You need emotional closeness and safety before any kind of intimacy. This feels too transactional.',
-      summary: 'Chose emotional safety over direct, clear arrangements.'
+      text: 'Decline. You prefer to only explore intimate hygiene or wellness practices when there is already deep emotional trust and safety with your partner first.',
+      summary: 'Chose emotional safety over independence.'
     }
   },
   {
     id: 4,
-    title: 'The Midnight Invitation',
+    title: 'The Last Minute Healing Invitation',
     valueA: 'spontaneity',
     valueB: 'social_approval',
-    scenario: 'A sophisticated stranger sends you a last-minute invitation to an exclusive private gathering — high-end, discreet, exciting. You have no idea who else will be there. It breaks your usual routine completely.',
+    scenario: 'A trusted wellness guide sends you a last-minute invitation to an exclusive, intimate self-healing body cleansing and energy purification session — deeply restorative, private, and transformative. It completely breaks your usual evening routine.',
     optionA: {
-      text: 'Say yes. Excitement doesn\'t wait for a perfect schedule. You get dressed and go.',
-      summary: 'Chose spontaneous adventure over predictable routine.'
+      text: 'Say yes. Your wellbeing doesn’t wait for a perfect schedule. You get ready and go nourish your body and spirit.',
+      summary: 'Chose spontaneity over social approval.'
     },
     optionB: {
-      text: 'Decline. It feels reckless. You need to know more about the people involved before committing to anything.',
-      summary: 'Chose caution and approval over spontaneous excitement.'
+      text: 'Decline. It feels too impulsive. You need to know more details and ensure it fits your usual social expectations before committing.',
+      summary: 'Chose social approval over spontaneity.'
     }
   }
 ];
@@ -132,7 +132,7 @@ const DEFAULT_PASSCODE = 'host123';
 let gameState = {
   playerName: '',
   currentScreen: 'welcome',
-  
+
   // Phase 1 (Bracket)
   bracketValues: [],       // Array of current values in tournament
   eliminatedValues: [],    // Values that lost
@@ -141,7 +141,7 @@ let gameState = {
   p1Matches: [],           // Match history: { winner, loser, time }
   valuePoints: {},         // Score based on bracket depth
   p1StartTime: 0,
-  
+
   // Phase 2 (Dilemmas)
   dilemmaIndex: 0,         // Active dilemma index (0 to 3)
   dilemmaAnswers: [],      // Choices made: { dilemmaId, selectedValue, chosenText, rejectedText, timeTaken }
@@ -181,7 +181,7 @@ function setupEventListeners() {
   // Choice Cards Clicks
   document.getElementById('choice-a').addEventListener('click', () => handleBracketChoice('a'));
   document.getElementById('choice-b').addEventListener('click', () => handleBracketChoice('b'));
-  
+
   // Keyboard access for cards
   document.getElementById('choice-a').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') handleBracketChoice('a');
@@ -200,7 +200,7 @@ function setupEventListeners() {
   // Dilemma Cards Clicks
   document.getElementById('dilemma-choice-a').addEventListener('click', () => handleDilemmaChoice('a'));
   document.getElementById('dilemma-choice-b').addEventListener('click', () => handleDilemmaChoice('b'));
-  
+
   // Keyboard access for dilemmas
   document.getElementById('dilemma-choice-a').addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') handleDilemmaChoice('a');
@@ -346,13 +346,13 @@ function initPhase1() {
   // Shuffle value keys for random seeding
   const keys = Object.keys(VALUES);
   const shuffledKeys = keys.sort(() => Math.random() - 0.5);
-  
+
   gameState.bracketValues = [...shuffledKeys];
   gameState.eliminatedValues = [];
   gameState.roundIndex = 1; // Round 1: Quarter Finals
   gameState.matchIndex = 0;
   gameState.p1Matches = [];
-  
+
   // Reset point tracking
   shuffledKeys.forEach(k => {
     gameState.valuePoints[k] = 0;
@@ -374,7 +374,7 @@ function renderBracketNodes() {
     pill.className = 'bracket-pill';
     pill.id = `pill-${valKey}`;
     pill.textContent = valObj.name;
-    
+
     // Status colorings
     if (gameState.eliminatedValues.includes(valKey)) {
       pill.classList.add('eliminated');
@@ -518,14 +518,14 @@ function initPhase2() {
 
 function loadDilemma() {
   const dilemma = DILEMMAS[gameState.dilemmaIndex];
-  
+
   document.getElementById('p2-dilemma-title').textContent = `Scenario ${dilemma.id} of 4`;
   document.getElementById('p2-scenario-title').textContent = dilemma.title;
   document.getElementById('p2-scenario-desc').textContent = dilemma.scenario;
 
   document.getElementById('dilemma-choice-a-text').textContent = dilemma.optionA.text;
   document.getElementById('dilemma-choice-b-text').textContent = dilemma.optionB.text;
-  
+
   document.getElementById('dilemma-choice-a').dataset.valueKey = dilemma.valueA;
   document.getElementById('dilemma-choice-b').dataset.valueKey = dilemma.valueB;
 
@@ -539,7 +539,7 @@ function loadDilemma() {
 function startDilemmaTimer() {
   clearInterval(gameState.dilemmaTimerInterval);
   const timerLabel = document.getElementById('dilemma-timer');
-  
+
   gameState.dilemmaTimerInterval = setInterval(() => {
     const elapsed = (performance.now() - gameState.dilemmaStartTime) / 1000;
     timerLabel.textContent = `${elapsed.toFixed(1)}s`;
@@ -647,32 +647,32 @@ function compilePlayerReport() {
       archetype = 'The Pleasure Seeker';
       rapportAdvice = 'She values quality experiences deeply. Open with complimenting something specific about her presence — her energy, style, or a detail in her environment. Ask her about the last time she truly indulged herself.';
       shareableQuote = '"The most luxurious thing a person can own is the freedom to experience life on their own terms."';
-      persuasionScript = `"I get the sense you know what you want, and you don't settle for less. I'd love to offer you something that matches that standard — private, curated, and completely on your terms. No drama, no expectations. Just the finest experience."` ;
+      persuasionScript = `"I get the sense you know what you want, and you don't settle for less. I'd love to offer you something that matches that standard — private, curated, and completely on your terms. No drama, no expectations. Just the finest experience."`;
       hostAdvice = 'She is highly receptive. Mirror her energy — be polished and confident. Lean in slowly, not aggressively. Mention exclusivity: "This is for a very specific kind of person."';
     } else if (dominant === 'discretion' || dominant === 'independence') {
       archetype = 'The Discreet Adventurer';
       rapportAdvice = 'Build trust by signaling that you value privacy as much as she does. Mention that you never discuss your encounters. Ask open-ended questions about what she does for herself — not for others.';
       shareableQuote = '"True freedom is doing what you want, with who you want, without anyone needing to know."';
-      persuasionScript = `"What we do stays between us — always. I have a strict privacy policy. No photos, no names, no traces. The kind of arrangement most people only dream about — but never get to experience."` ;
+      persuasionScript = `"What we do stays between us — always. I have a strict privacy policy. No photos, no names, no traces. The kind of arrangement most people only dream about — but never get to experience."`;
       hostAdvice = 'She will not be won over by small talk. Signal competence and discretion immediately. Let her drive the pace, but gently suggest the idea of an exclusive arrangement.';
     } else {
       archetype = 'The Spontaneous Explorer';
       rapportAdvice = 'She is drawn to thrill and immediacy. Suggest something unexpected — an invitation, a mysterious plan. Do not over-explain. Use intrigue as the hook.';
       shareableQuote = '"The best stories begin with an unexpected yes."';
-      persuasionScript = `"I usually don't ask twice — but I have a feeling you're someone who appreciates saying yes to the right things at the right moment. This would be one of those moments."` ;
+      persuasionScript = `"I usually don't ask twice — but I have a feeling you're someone who appreciates saying yes to the right things at the right moment. This would be one of those moments."`;
       hostAdvice = 'Move fast but smoothly. Hesitation will kill the mood. Plant the seed of something exciting and let her curiosity pull her in.';
     }
   } else if (finalProbability >= 50) {
     archetype = 'The Curious Independent';
     rapportAdvice = 'She is open but cautious. She needs to feel safe before she is open. Build warmth first — ask about her passions, her lifestyle. Do not rush.';
     shareableQuote = '"Some of the most beautiful experiences happen when you trust your instincts just a little more than your fears."';
-    persuasionScript = `"I'd love to just talk more — no pressure. I find you genuinely interesting, and I'd like to get to know what kind of experiences really excite you. What's something you've always wanted to try but never found the right person to try it with?"` ;
+    persuasionScript = `"I'd love to just talk more — no pressure. I find you genuinely interesting, and I'd like to get to know what kind of experiences really excite you. What's something you've always wanted to try but never found the right person to try it with?"`;
     hostAdvice = 'She scored in the middle range. She could go either way. Focus on comfort and connection first. Qualify her more before making any direct move. This session is about building rapport, not closing.';
   } else {
     archetype = 'The Traditional Romantic';
     rapportAdvice = 'She is not aligned with the service at this time. She prioritizes emotional safety and social approval. Engaging her directly is high risk. Gracefully transition to friendly conversation and exit.';
     shareableQuote = '"Not every flower blooms in every season — and that is perfectly okay."';
-    persuasionScript = `"I really enjoyed talking with you. I don't think this is the right moment for us to connect on a deeper level, but I hope we cross paths again sometime."` ;
+    persuasionScript = `"I really enjoyed talking with you. I don't think this is the right moment for us to connect on a deeper level, but I hope we cross paths again sometime."`;
     hostAdvice = 'She is a Non-Prospect at this time. Do NOT pursue an arrangement. She is motivated by social reputation and traditional values. Respectfully disengage. There is no risk as long as you keep it friendly.';
   }
 
@@ -749,7 +749,7 @@ function renderPlayerList(sessions) {
     const item = document.createElement('div');
     item.className = 'player-list-item animate-fade-in';
     item.id = `player-item-${session.id}`;
-    
+
     const prob = session.prospectProbability || 0;
     const probColorClass = prob >= 75 ? 'auth-high' : prob >= 50 ? 'auth-mid' : 'auth-low';
 
@@ -788,7 +788,7 @@ function selectPlayerForDetail(sessionId) {
 
 function renderPlayerDetails(session) {
   const panel = document.getElementById('dashboard-details-panel');
-  
+
   const prob = session.prospectProbability || 0;
   const barColor = prob >= 75 ? '#2ed573' : prob >= 50 ? '#ffa502' : '#ff4757';
 
@@ -850,8 +850,8 @@ function renderPlayerDetails(session) {
         <div class="verdict-title">${session.verdict}</div>
         <div class="verdict-tip">
           ${prob >= 75 ? '<strong>What this means:</strong> Very likely to be interested in a professional intimate arrangement. Safe to engage with confidence.' :
-            prob >= 50 ? '<strong>What this means:</strong> Possibly open but has hesitations. Proceed with care, build more trust first.' :
-            '<strong>What this means:</strong> Not aligned with the service at this time. Traditional values dominate. Engage only as a friend — do not propose an arrangement.'}
+      prob >= 50 ? '<strong>What this means:</strong> Possibly open but has hesitations. Proceed with care, build more trust first.' :
+        '<strong>What this means:</strong> Not aligned with the service at this time. Traditional values dominate. Engage only as a friend — do not propose an arrangement.'}
         </div>
       </div>
     </div>
@@ -921,7 +921,7 @@ function renderDetailsPanelPlaceholder() {
   `;
 }
 
-window.deletePlayerReport = function(sessionId) {
+window.deletePlayerReport = function (sessionId) {
   if (confirm('Delete this player report?')) {
     const sessions = JSON.parse(localStorage.getItem('unmasked_sessions') || '[]');
     const updated = sessions.filter(s => s.id !== sessionId);
@@ -943,7 +943,7 @@ function enterHostDashboard() {
 
 // 4. UTILITIES
 function escapeHTML(str) {
-  return str.replace(/[&<>'"]/g, 
+  return str.replace(/[&<>'"]/g,
     tag => ({
       '&': '&amp;',
       '<': '&lt;',
