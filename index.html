@@ -51,16 +51,23 @@
             <i class="fa-solid fa-mask mask-icon"></i>
           </div>
         </div>
-        <h1>Unmask Your Desires</h1>
-        <p class="subtitle">Every relationship is built on values. This game compares your ideal connection values with real-world lifestyle decisions to map your compatibility profile. Find out where you align.</p>
+        <h1>Prospect Profiling Panel</h1>
+        <p class="subtitle">Enter the details of your prospect below. As you guide them through this social experiment, ask the questions and record their responses.</p>
         
         <form class="welcome-form" id="register-form" onsubmit="event.preventDefault();">
           <div class="input-group">
-            <label for="player-name">PLAYER NAME</label>
-            <input type="text" id="player-name" value="Star" autocomplete="off" required>
+            <label for="player-name">PROSPECT NAME</label>
+            <input type="text" id="player-name" placeholder="Enter prospect name..." autocomplete="off" required>
+          </div>
+          <div class="input-group">
+            <label for="player-marital-status">MARITAL STATUS</label>
+            <select id="player-marital-status" required>
+              <option value="single" selected>Single / Unmarried</option>
+              <option value="married">Married</option>
+            </select>
           </div>
           <button type="submit" class="btn btn-primary" id="btn-start-game">
-            <span>Begin Experiment</span>
+            <span>Begin Interview</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </form>
@@ -72,10 +79,12 @@
       <div class="glass-card text-center max-w-md animate-fade-in">
         <div class="phase-badge">Phase 01</div>
         <h2>Connection Desires</h2>
-        <p class="mb-6">First, let's explore what you value in connection. You will face a series of bracket matchups pitting different relationship and intimacy ideals against each other. Select the one you prioritize most.</p>
-        <div class="info-alert">
-          <i class="fa-solid fa-circle-info"></i>
-          <span>Select the choice that honestly represents your desire. There are no wrong answers.</span>
+        <div class="host-instruction-banner">
+          <i class="fa-solid fa-bullhorn"></i>
+          <div class="host-instruction-text">
+            <strong>ASK PROSPECT:</strong>
+            <p>"First, let's explore what you value in connection. I will show you different relationship and intimacy values in pairs. Tell me which one you prioritize most in your life right now."</p>
+          </div>
         </div>
         <button class="btn btn-primary mt-6" id="btn-start-phase1">
           <span>Start Bracket Sorter</span>
@@ -90,7 +99,10 @@
         <!-- Match title/round indicator -->
         <div class="match-meta text-center mb-4">
           <div class="round-indicator" id="p1-round-title">Round 1 • Match 1</div>
-          <p class="meta-tagline text-muted">Which value defines your ideal self?</p>
+          <div class="host-question-prompt">
+            <span class="host-prompt-label">ASK PROSPECT:</span>
+            <span class="host-prompt-text">"Which of these two do you prioritize more?"</span>
+          </div>
         </div>
 
         <!-- Pairwise choices container -->
@@ -101,7 +113,7 @@
             <div class="choice-icon"><i class="fa-solid fa-heart"></i></div>
             <h3 class="choice-title" id="choice-a-title">Value A</h3>
             <p class="choice-desc" id="choice-a-desc">Description of Value A</p>
-            <div class="choice-select-indicator">Select Value</div>
+            <div class="choice-select-indicator">Record Value</div>
           </div>
           
           <div class="versus-divider">
@@ -114,7 +126,7 @@
             <div class="choice-icon"><i class="fa-solid fa-trophy"></i></div>
             <h3 class="choice-title" id="choice-b-title">Value B</h3>
             <p class="choice-desc" id="choice-b-desc">Description of Value B</p>
-            <div class="choice-select-indicator">Select Value</div>
+            <div class="choice-select-indicator">Record Value</div>
           </div>
         </div>
 
@@ -124,7 +136,45 @@
           <div class="bracket-nodes-row" id="bracket-nodes">
             <!-- Dynamically populated nodes representing remaining values -->
           </div>
+          <div class="early-unlock-container">
+            <button class="btn btn-secondary btn-sm" id="btn-early-unlock">
+              <i class="fa-solid fa-unlock"></i>
+              <span>Skip & Unlock Results Early</span>
+            </button>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN: EARLY UNLOCK LOGIN SCREEN ================= -->
+    <section class="screen hidden" id="screen-early-login">
+      <div class="glass-card max-w-sm animate-fade-in" style="margin: 0 auto;">
+        <div class="text-center mb-6">
+          <div class="icon-header">
+            <div class="lock-icon-container">
+              <i class="fa-solid fa-lock lock-icon"></i>
+            </div>
+          </div>
+          <h2>Early Unlock</h2>
+          <p class="text-muted">Enter passcode to skip scenarios and view bracket results.</p>
+        </div>
+        
+        <form class="welcome-form" id="early-login-form" onsubmit="event.preventDefault();">
+          <div class="input-group">
+            <label for="early-passcode">HOST PASSCODE</label>
+            <input type="password" id="early-passcode" placeholder="Passcode (default: host123)" required>
+            <div class="passcode-error hidden" id="early-error-msg">Incorrect passcode. Try again.</div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-early-login">
+              <span>Back to Bracket</span>
+            </button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-early-login">
+              <span>Unlock</span>
+              <i class="fa-solid fa-unlock"></i>
+            </button>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -133,10 +183,12 @@
       <div class="glass-card text-center max-w-md animate-fade-in">
         <div class="phase-badge badge-alert">Phase 02</div>
         <h2>Real Trade-Offs</h2>
-        <p class="mb-6">Your connection desires are set. Now, let's look at real-world decisions. You will face a series of practical scenarios. Each scenario forces you to make a choice between two actions.</p>
-        <div class="info-alert alert-warning">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          <span>These scenarios represent trade-offs. Select the action you would actually take in reality, not what sounds correct.</span>
+        <div class="host-instruction-banner banner-alert">
+          <i class="fa-solid fa-bullhorn"></i>
+          <div class="host-instruction-text">
+            <strong>ASK PROSPECT:</strong>
+            <p>"Now let's look at real-world decisions. I will read you four short practical scenarios. Tell me honestly which action you would take in reality under pressure."</p>
+          </div>
         </div>
         <button class="btn btn-primary mt-6" id="btn-start-phase2">
           <span>Enter the Crucible</span>
@@ -151,6 +203,10 @@
         <!-- Scenario Narrative Card -->
         <div class="glass-card scenario-card animate-slide-up mb-6">
           <div class="scenario-meta">
+            <div class="host-read-badge">
+              <i class="fa-solid fa-bullhorn"></i>
+              <span>READ TO PROSPECT</span>
+            </div>
             <span class="dilemma-index" id="p2-dilemma-title">Dilemma 1 of 4</span>
             <span class="pulse-timer"><i class="fa-regular fa-clock"></i> <span id="dilemma-timer">0.0s</span></span>
           </div>
@@ -164,18 +220,18 @@
           <div class="dilemma-card glass-card" id="dilemma-choice-a" tabindex="0">
             <div class="card-glow"></div>
             <div class="dilemma-action-icon"><i class="fa-solid fa-arrow-left"></i></div>
-            <h4 class="dilemma-choice-label">Option A</h4>
+            <h4 class="dilemma-choice-label">RECORD OPTION A</h4>
             <p class="dilemma-choice-desc" id="dilemma-choice-a-text">Description of Action A</p>
-            <div class="choice-select-indicator">Choose Option</div>
+            <div class="choice-select-indicator">Record Choice A</div>
           </div>
           
           <!-- Action B -->
           <div class="dilemma-card glass-card" id="dilemma-choice-b" tabindex="0">
             <div class="card-glow"></div>
             <div class="dilemma-action-icon"><i class="fa-solid fa-arrow-right"></i></div>
-            <h4 class="dilemma-choice-label">Option B</h4>
+            <h4 class="dilemma-choice-label">RECORD OPTION B</h4>
             <p class="dilemma-choice-desc" id="dilemma-choice-b-text">Description of Action B</p>
-            <div class="choice-select-indicator">Choose Option</div>
+            <div class="choice-select-indicator">Record Choice B</div>
           </div>
         </div>
       </div>
@@ -183,25 +239,26 @@
 
     <!-- ================= SCREEN 6: PLAYER COMPLETION SCREEN ================= -->
     <section class="screen hidden" id="screen-complete">
-      <div class="glass-card text-center max-w-md animate-fade-in">
+      <div class="glass-card text-center max-w-md animate-fade-in" style="margin: 0 auto;">
         <div class="icon-header">
-          <div class="success-icon-container">
-            <i class="fa-solid fa-square-poll-vertical success-icon animate-pulse"></i>
+          <div class="lock-icon-container">
+            <i class="fa-solid fa-lock lock-icon animate-pulse"></i>
           </div>
         </div>
-        <h2>Analysis Complete</h2>
-        <p class="mb-6">Thank you, <strong id="complete-player-name">Player</strong>. Your response has been compiled and analyzed by the experiment engine.</p>
-        <p class="text-muted mb-6">To maintain the integrity of the social experiment, the psychological profiling report is hidden and sent directly to the Host's dashboard.</p>
+        <h2>Interview Complete</h2>
+        <p class="mb-6">Responses for <strong id="complete-player-name">Player</strong> have been successfully compiled.</p>
         
-        <div class="handover-box">
-          <i class="fa-solid fa-arrows-rotate animate-spin-slow"></i>
-          <span>Please hand the device back to the **Host** now.</span>
-        </div>
-        
-        <button class="btn btn-secondary mt-6" id="btn-restart-game">
-          <i class="fa-solid fa-rotate-left"></i>
-          <span>Reset for Next Player</span>
-        </button>
+        <form class="welcome-form" id="complete-unlock-form" onsubmit="event.preventDefault();">
+          <div class="input-group">
+            <label for="complete-passcode">ENTER HOST PASSCODE TO VIEW REPORT</label>
+            <input type="password" id="complete-passcode" placeholder="Passcode (default: host123)" required>
+            <div class="passcode-error hidden" id="complete-error-msg">Incorrect passcode. Try again.</div>
+          </div>
+          <button type="submit" class="btn btn-primary w-full mt-4">
+            <span>Unlock & View Results</span>
+            <i class="fa-solid fa-unlock"></i>
+          </button>
+        </form>
       </div>
     </section>
 

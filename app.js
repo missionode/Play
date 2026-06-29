@@ -8,13 +8,7 @@
 // Positive (prospect-aligned) values: increase probability when chosen
 const PROSPECT_POSITIVE_VALUES = ['discretion', 'sensuality', 'luxury', 'independence', 'spontaneity'];
 
-const VALUES = {
-  discretion: {
-    id: 'discretion',
-    name: 'Discretion',
-    icon: 'fa-user-secret',
-    desc: 'Keeping connections private, valuing secrecy, and sharing only on your own terms.'
-  },
+const VALUES_SINGLE = {
   sensuality: {
     id: 'sensuality',
     name: 'Sensual Joy',
@@ -56,8 +50,67 @@ const VALUES = {
     name: 'Emotional Safety',
     icon: 'fa-shield-heart',
     desc: 'Seeking connections where you feel fully protected, understood, and emotionally secure.'
+  },
+  romantic_idealism: {
+    id: 'romantic_idealism',
+    name: 'Romantic Idealism',
+    icon: 'fa-wand-magic-sparkles',
+    desc: 'Waiting for the perfect, fairy-tale romance rather than compromising for reality.'
   }
 };
+
+const VALUES_MARRIED = {
+  discretion: {
+    id: 'discretion',
+    name: 'Discretion & Secrecy',
+    icon: 'fa-user-secret',
+    desc: 'Keeping connections private, valuing absolute secrecy, and sharing only on your terms.'
+  },
+  sensuality: {
+    id: 'sensuality',
+    name: 'Physical Recharge',
+    icon: 'fa-spa',
+    desc: 'Sensual touch, atmosphere, and physical rejuvenation outside of your daily marital routine.'
+  },
+  luxury: {
+    id: 'luxury',
+    name: 'Luxury Pampering',
+    icon: 'fa-gem',
+    desc: 'Indulging in premium self-care, fine services, and elite experiences meant just for you.'
+  },
+  independence: {
+    id: 'independence',
+    name: 'Personal Escape',
+    icon: 'fa-feather-pointed',
+    desc: 'Having a private life, secrets, or time that is entirely your own, separate from spousal duties.'
+  },
+  marital_fidelity: {
+    id: 'marital_fidelity',
+    name: 'Marital Fidelity',
+    icon: 'fa-ring',
+    desc: 'Strictly honoring marriage vows and staying fully faithful to your husband/spouse.'
+  },
+  social_reputation: {
+    id: 'social_reputation',
+    name: 'Social Reputation',
+    icon: 'fa-users',
+    desc: 'Avoiding any risk of gossip, family shame, or threat to your social standing in the community.'
+  },
+  family_stability: {
+    id: 'family_stability',
+    name: 'Family Stability',
+    icon: 'fa-house-chimney-window',
+    desc: 'Keeping the household stable, protecting the children, and maintaining domestic peace.'
+  },
+  domestic_comfort: {
+    id: 'domestic_comfort',
+    name: 'Domestic Routine',
+    icon: 'fa-couch',
+    desc: 'Finding complete peace and satisfaction within the familiar boundaries of your home life.'
+  }
+};
+
+let VALUES = VALUES_SINGLE;
 
 // Crucial Dilemmas (Phase 2)
 // optionA is always the prospect-aligned choice (increases probability)
@@ -131,6 +184,7 @@ const DEFAULT_PASSCODE = 'host123';
 // 2. GAME STATE VARIABLE MANAGEMENT
 let gameState = {
   playerName: '',
+  maritalStatus: 'single', // 'single' or 'married'
   currentScreen: 'welcome',
 
   // Phase 1 (Bracket)
@@ -164,8 +218,12 @@ function setupEventListeners() {
   document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const nameInput = document.getElementById('player-name').value.trim();
+    const statusSelect = document.getElementById('player-marital-status').value;
     if (nameInput) {
       gameState.playerName = nameInput;
+      gameState.maritalStatus = statusSelect;
+      // Point global pointer to single vs married set
+      VALUES = statusSelect === 'married' ? VALUES_MARRIED : VALUES_SINGLE;
       transitionToScreen('screen-phase1-intro');
     }
   });
@@ -190,6 +248,28 @@ function setupEventListeners() {
     if (e.key === 'Enter' || e.key === ' ') handleBracketChoice('b');
   });
 
+  // Early unlock screen triggers
+  document.getElementById('btn-early-unlock').addEventListener('click', () => {
+    transitionToScreen('screen-early-login');
+  });
+
+  document.getElementById('btn-cancel-early-login').addEventListener('click', () => {
+    transitionToScreen('screen-phase1-game');
+  });
+
+  document.getElementById('early-login-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const passcode = document.getElementById('early-passcode').value;
+    if (passcode === DEFAULT_PASSCODE) {
+      document.getElementById('early-error-msg').classList.add('hidden');
+      document.getElementById('early-passcode').value = '';
+      compilePlayerReport();
+      enterHostDashboard();
+    } else {
+      document.getElementById('early-error-msg').classList.remove('hidden');
+    }
+  });
+
   // Phase 2 Start
   document.getElementById('btn-start-phase2').addEventListener('click', () => {
     initPhase2();
@@ -209,10 +289,17 @@ function setupEventListeners() {
     if (e.key === 'Enter' || e.key === ' ') handleDilemmaChoice('b');
   });
 
-  // Restart / Next Player
-  document.getElementById('btn-restart-game').addEventListener('click', () => {
-    resetGame();
-    transitionToScreen('screen-welcome');
+  // Complete unlock form submission
+  document.getElementById('complete-unlock-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const passcode = document.getElementById('complete-passcode').value;
+    if (passcode === DEFAULT_PASSCODE) {
+      document.getElementById('complete-error-msg').classList.add('hidden');
+      document.getElementById('complete-passcode').value = '';
+      enterHostDashboard();
+    } else {
+      document.getElementById('complete-error-msg').classList.remove('hidden');
+    }
   });
 
   // Host Dashboard Trigger
@@ -289,7 +376,7 @@ function transitionToScreen(screenId) {
 
   // Manage header icons/dashboards active styles
   const trigger = document.getElementById('host-trigger');
-  if (screenId === 'screen-host-dashboard' || screenId === 'screen-host-login') {
+  if (screenId === 'screen-host-dashboard' || screenId === 'screen-host-login' || screenId === 'screen-early-login') {
     trigger.classList.add('active');
     document.getElementById('game-progress').classList.add('hidden');
   } else {
@@ -319,6 +406,7 @@ function resetGame() {
   clearInterval(gameState.dilemmaTimerInterval);
   gameState = {
     playerName: '',
+    maritalStatus: 'single',
     currentScreen: 'welcome',
     bracketValues: [],
     eliminatedValues: [],
@@ -333,7 +421,9 @@ function resetGame() {
     dilemmaTimerInterval: null,
     prospectProbability: 50
   };
-  document.getElementById('player-name').value = 'Star';
+  VALUES = VALUES_SINGLE;
+  document.getElementById('player-name').value = '';
+  document.getElementById('player-marital-status').value = 'single';
   document.getElementById('game-progress').classList.add('hidden');
 }
 
@@ -342,19 +432,48 @@ function resetGame() {
 // PHASE 1: BRACKET TOURNAMENT LOGIC
 // ==========================================================================
 
-function initPhase1() {
-  // Shuffle value keys for random seeding
-  const keys = Object.keys(VALUES);
-  const shuffledKeys = keys.sort(() => Math.random() - 0.5);
+function optimizeMatchups(keys) {
+  const positives = keys.filter(k => PROSPECT_POSITIVE_VALUES.includes(k));
+  const traditionals = keys.filter(k => !PROSPECT_POSITIVE_VALUES.includes(k));
+  
+  const optimized = [];
+  const minLen = Math.min(positives.length, traditionals.length);
+  
+  // Pair positives with traditionals
+  for (let i = 0; i < minLen; i++) {
+    optimized.push(positives[i]);
+    optimized.push(traditionals[i]);
+  }
+  
+  // Push any remaining elements (which will be of the same category)
+  const remaining = positives.length > traditionals.length ? positives.slice(minLen) : traditionals.slice(minLen);
+  optimized.push(...remaining);
+  
+  return optimized;
+}
 
-  gameState.bracketValues = [...shuffledKeys];
+function initPhase1() {
+  const keys = Object.keys(VALUES);
+  
+  // Separate based on positive vs traditional
+  const positives = keys.filter(k => PROSPECT_POSITIVE_VALUES.includes(k));
+  const traditionals = keys.filter(k => !PROSPECT_POSITIVE_VALUES.includes(k));
+  
+  // Shuffle both sets randomly
+  const shuffledPos = positives.sort(() => Math.random() - 0.5);
+  const shuffledTrad = traditionals.sort(() => Math.random() - 0.5);
+  
+  // Combine and optimize to ensure 1 positive vs 1 traditional matches
+  const shuffledAll = [...shuffledPos, ...shuffledTrad];
+  gameState.bracketValues = optimizeMatchups(shuffledAll);
+  
   gameState.eliminatedValues = [];
   gameState.roundIndex = 1; // Round 1: Quarter Finals
   gameState.matchIndex = 0;
   gameState.p1Matches = [];
 
   // Reset point tracking
-  shuffledKeys.forEach(k => {
+  keys.forEach(k => {
     gameState.valuePoints[k] = 0;
   });
 
@@ -495,7 +614,8 @@ function handleBracketChoice(cardId) {
         updateProbabilityBar();
       }, 800);
     } else {
-      gameState.bracketValues = gameState.bracketValues.slice(0, expectedMatchesInRound);
+      const roundWinners = gameState.bracketValues.slice(0, expectedMatchesInRound);
+      gameState.bracketValues = optimizeMatchups(roundWinners);
       gameState.roundIndex++;
       gameState.matchIndex = 0;
       setTimeout(() => { loadNextBracketMatch(); }, 300);
@@ -621,6 +741,11 @@ function compilePlayerReport() {
     }
   });
 
+  // Fallback if no winner found (or all points are 0)
+  if (!bracketWinner && gameState.bracketValues.length > 0) {
+    bracketWinner = gameState.bracketValues[0];
+  }
+
   // Simple verdict based on final probability
   let verdict, verdictClass, verdictIcon;
   if (finalProbability >= 75) {
@@ -689,10 +814,24 @@ function compilePlayerReport() {
   });
   const speedVerdict = avgP2Time < 2.5 ? 'Impulsive & Decisive' : avgP2Time > 6 ? 'Deeply Conflicted' : 'Measured & Thoughtful';
 
+  // Calculate contradictions
+  const contradictions = [];
+  answers.forEach(ans => {
+    const selectedValPts = points[ans.selectedValue] || 0;
+    const rejectedValPts = points[ans.rejectedValue] || 0;
+    
+    if (rejectedValPts > selectedValPts) {
+      const valSelectedObj = VALUES[ans.selectedValue] || {};
+      const valRejectedObj = VALUES[ans.rejectedValue] || {};
+      contradictions.push(`Claimed to prioritize <strong>${valRejectedObj.name || ans.rejectedValue}</strong> in Phase 1, but chose <strong>${valSelectedObj.name || ans.selectedValue}</strong> in Dilemma ${ans.dilemmaId}.`);
+    }
+  });
+
   // Save Session Report
   const sessionReport = {
     id: Date.now().toString(),
     playerName: gameState.playerName,
+    maritalStatus: gameState.maritalStatus,
     datePlayed: new Date().toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
     prospectProbability: Math.round(finalProbability),
     verdict: verdict,
@@ -706,6 +845,7 @@ function compilePlayerReport() {
     bracketWinner: VALUES[bracketWinner] ? VALUES[bracketWinner].name : bracketWinner,
     bracketWinnerIcon: VALUES[bracketWinner] ? VALUES[bracketWinner].icon : 'fa-star',
     dilemmaAnswers: answers,
+    contradictions: contradictions,
     decisionSpeedVerdict: speedVerdict,
     avgDilemmaTime: avgP2Time.toFixed(1),
     slowestDilemma: slowestDilemma,
@@ -753,9 +893,13 @@ function renderPlayerList(sessions) {
     const prob = session.prospectProbability || 0;
     const probColorClass = prob >= 75 ? 'auth-high' : prob >= 50 ? 'auth-mid' : 'auth-low';
 
+    const statusBadge = session.maritalStatus === 'married' ? 
+      '<span class="badge-marital-status badge-married">M</span>' : 
+      '<span class="badge-marital-status badge-single">S</span>';
+
     item.innerHTML = `
       <div class="player-list-item-header">
-        <span class="player-list-item-name">${escapeHTML(session.playerName)}</span>
+        <span class="player-list-item-name">${escapeHTML(session.playerName)} ${statusBadge}</span>
         <span class="player-list-item-score ${probColorClass}">${prob}%</span>
       </div>
       <div class="player-list-item-meta">
@@ -817,11 +961,41 @@ function renderPlayerDetails(session) {
     });
   }
 
+  // Build contradictions alert box HTML
+  let contradictionsHTML = '';
+  if (session.dilemmaAnswers && session.dilemmaAnswers.length > 0) {
+    const contraList = session.contradictions || [];
+    if (contraList.length > 0) {
+      contradictionsHTML = `
+        <div class="contradictions-box animate-slide-up">
+          <h4><i class="fa-solid fa-triangle-exclamation"></i> Mask & Integrity Check</h4>
+          <div class="contradiction-list">
+            ${contraList.map(item => `<div class="contradiction-alert-item">${item}</div>`).join('')}
+          </div>
+        </div>
+      `;
+    } else {
+      contradictionsHTML = `
+        <div class="contradictions-box animate-slide-up" style="border-left-color: var(--success); background: rgba(46, 213, 115, 0.03); border-color: rgba(46, 213, 115, 0.12)">
+          <h4><i class="fa-solid fa-circle-check" style="color: var(--success)"></i> Mask & Integrity Check</h4>
+          <div class="no-contradictions-alert">
+            <i class="fa-solid fa-face-smile" style="color: var(--success)"></i> Stated values in Phase 1 align with their choices in Phase 2.
+          </div>
+        </div>
+      `;
+    }
+  }
+
   panel.innerHTML = `
     <!-- Profile Header -->
     <div class="profile-header animate-slide-up">
       <div class="profile-meta-main">
-        <h2>${escapeHTML(session.playerName)}</h2>
+        <h2>
+          ${escapeHTML(session.playerName)}
+          <span class="badge-marital-status ${session.maritalStatus === 'married' ? 'badge-married' : 'badge-single'}">
+            ${session.maritalStatus === 'married' ? 'Married' : 'Single'}
+          </span>
+        </h2>
         <span class="archetype-label">${session.archetype}</span>
       </div>
       <div class="text-right">
@@ -855,6 +1029,9 @@ function renderPlayerDetails(session) {
         </div>
       </div>
     </div>
+
+    <!-- ===== CONTRADICTIONS BOX ===== -->
+    ${contradictionsHTML}
 
     <!-- Comparison Row -->
     <div class="comparison-grid animate-slide-up">
@@ -939,6 +1116,11 @@ function filterPlayerList(query) {
 
 function enterHostDashboard() {
   transitionToScreen('screen-host-dashboard');
+  loadDashboardData();
+  const sessions = JSON.parse(localStorage.getItem('unmasked_sessions') || '[]');
+  if (sessions.length > 0) {
+    selectPlayerForDetail(sessions[0].id);
+  }
 }
 
 // 4. UTILITIES

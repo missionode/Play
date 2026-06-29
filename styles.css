@@ -1531,3 +1531,230 @@ p {
     margin: 0;
   }
 }
+
+/* ==========================================================================
+   INTERVIEWER FLOW & MARITAL STATUS CUSTOM STYLES
+   ========================================================================== */
+
+/* Select Dropdown Styling */
+.input-group select {
+  width: 100%;
+  background: rgba(18, 21, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1.2rem center;
+  background-size: 1.2rem;
+}
+
+.input-group select:focus {
+  outline: none;
+  background: rgba(20, 24, 35, 0.98);
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+}
+
+.input-group select option {
+  background: var(--bg-dark);
+  color: #fff;
+  padding: 0.5rem;
+}
+
+/* Host Instruction Banner */
+.host-instruction-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  background: rgba(0, 229, 255, 0.04);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  margin: 1.5rem 0;
+  box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.02);
+}
+
+.host-instruction-banner i {
+  color: var(--primary);
+  font-size: 1.3rem;
+  margin-top: 0.15rem;
+  filter: drop-shadow(0 0 5px var(--primary-glow));
+}
+
+.host-instruction-banner.banner-alert {
+  background: rgba(255, 71, 87, 0.04);
+  border-color: rgba(255, 71, 87, 0.15);
+  border-left-color: var(--accent-coral);
+}
+
+.host-instruction-banner.banner-alert i {
+  color: var(--accent-coral);
+  filter: drop-shadow(0 0 5px var(--accent-coral-glow));
+}
+
+.host-instruction-text strong {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.host-instruction-text p {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* Host Question Prompt (Bracket Matchups) */
+.host-question-prompt {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+}
+
+.host-prompt-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary-glow);
+  margin-bottom: 0.2rem;
+}
+
+.host-prompt-text {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #fff;
+  font-style: italic;
+}
+
+/* Host Read Badge (Dilemma screen) */
+.host-read-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.8rem;
+  background: rgba(255, 71, 87, 0.12);
+  border: 1px solid rgba(255, 71, 87, 0.25);
+  color: var(--accent-coral);
+  border-radius: 30px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 5px var(--accent-coral-glow);
+}
+
+/* Early Unlock Button Style */
+.early-unlock-container {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+}
+
+.early-unlock-container .btn {
+  font-size: 0.8rem;
+  padding: 0.5rem 1.2rem;
+  width: auto;
+}
+
+/* Dashboard Badges & Contradictions */
+.badge-marital-status {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.badge-single {
+  background: rgba(46, 213, 115, 0.12);
+  border: 1px solid rgba(46, 213, 115, 0.25);
+  color: var(--success);
+}
+
+.badge-married {
+  background: rgba(255, 165, 0, 0.12);
+  border: 1px solid rgba(255, 165, 0, 0.25);
+  color: var(--warning);
+}
+
+/* Contradictions Diagnostics in Dashboard */
+.contradictions-box {
+  background: rgba(255, 71, 87, 0.03);
+  border: 1px solid rgba(255, 71, 87, 0.12);
+  border-left: 4px solid var(--accent-coral);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.contradictions-box h4 {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contradictions-box h4 i {
+  color: var(--accent-coral);
+  filter: drop-shadow(0 0 5px var(--accent-coral-glow));
+}
+
+.contradiction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.contradiction-alert-item {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+
+.contradiction-alert-item strong {
+  color: var(--accent-coral);
+}
+
+.no-contradictions-alert {
+  font-size: 0.88rem;
+  color: var(--success);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
